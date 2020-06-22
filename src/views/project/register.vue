@@ -63,7 +63,7 @@
     <div>
       <el-button
         type="primary"
-        @click="GetPositionsByLevelType(value)"
+        @click="push('ruleForm')"
       >
         提交
       </el-button>
@@ -82,10 +82,42 @@ export default {
   data() {
     return {
       ruleForm: {
-      staffId:1,
-      name:"",
+        staffId:"",
+        name:"",
+        userName:"",
+        password:"",
+        passwordToo:"",
+        academic:"",
+        nation:"",
       },
       value: 0,
+      staffIds:[],
+      academics:[],
+      nations:[],
+
+      rules: {
+        staffId: [
+          { required:true, message:'请选择所在主体', trigger: 'change' }
+        ],
+        name: [
+          { required:true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        userName: [
+          { required:true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        password: [
+          { required:true, message: '请输入密码', trigger: 'blur' }
+        ],
+        passwordToo: [
+          { required:true, message: '请确认密码', trigger: 'blur' }
+        ],
+        academic: [
+          { required:true, message: '请选择学历', trigger: 'change' }
+        ],
+        nation: [
+          { required:true, message: '请选择民族', trigger: 'change'}
+        ],
+      }
 
     };
   },
@@ -96,8 +128,43 @@ export default {
         this.value = response.data;
         // console.log(response.data);
       });
+    },
+    push(formName) {
+      this.$refs[formName].validate((valid) => {
+        // console.log("remote_addr is "+this.ruleForm.remote_addr)
+        if (valid) {
+          const staffId = this.ruleForm.staffId;
+          const name = this.ruleForm.name;
+          const userName = this.ruleForm.userName;
+          const password = this.ruleForm.password;
+          const academic = this.ruleForm.academic;
+          const nation = this.ruleForm.nation;
+          this.upLoading = true;
+          this.$store
+            .dispatch("doRegister", {
+              staffId: staffId, 
+              name: name,
+              userName: userName,
+              password: password,
+              academic: academic, 
+              nation: nation
+            })
+            .then(response => {
+              this.upLoading = false;
+              this.enumPaneIsShow = true;
+              this.flage = response.data["flage"];
+                
+
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+
+        }
+      });
     }
   }
+
 };
 </script>
 
