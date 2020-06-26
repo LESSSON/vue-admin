@@ -6,9 +6,9 @@
     <el-main>
       <el-form :inline="false" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="请选择您所在的主体:" prop="staffId" >
-            <el-select v-model="ruleForm.staffIds" placeholder="请选择" multiple @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.staffIds" placeholder="请选择" @visible-change="getStaffId($event,staffId)" style="width:300px" filterable>
                 <el-option
-                v-for="item in remote_addrs"
+                v-for="item in staffIds"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -16,9 +16,9 @@
             </el-select>
           </el-form-item>
           <el-form-item label="请选择您所在的主体分支:" prop="staffId" >
-            <el-select v-model="ruleForm.staffIds" placeholder="请选择" multiple @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.staffIds" placeholder="请选择" @visible-change="getStaffId($event,staffId)" style="width:300px" filterable>
                 <el-option
-                v-for="item in remote_addrs"
+                v-for="item in staffIds"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -37,8 +37,21 @@
           <el-form-item label="确认密码" prop="passwordToo" >
             <el-input v-model="ruleForm.passwordToo" ></el-input>
           </el-form-item>
+          <el-form-item label="确认密码" prop="cardId" >
+            <el-input v-model="ruleForm.cardId" ></el-input>
+          </el-form-item>
+          <el-form-item label="请选择您的性别:" prop="sex" >
+            <el-select v-model="ruleForm.sex" placeholder="请选择" style="width:300px" filterable>
+                <el-option
+                v-for="item in sexs"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="请选择您的学历:" prop="academic" >
-            <el-select v-model="ruleForm.academic" placeholder="请选择" multiple @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.academic" placeholder="请选择" @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
                 <el-option
                 v-for="item in academics"
                 :key="item.value"
@@ -48,7 +61,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="请选择您的民族:" prop="nation" >
-            <el-select v-model="ruleForm.nation" placeholder="请选择" multiple @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.nation" placeholder="请选择" @visible-change="getRemoteAddr($event,remote_addr)" style="width:300px" filterable>
                 <el-option
                 v-for="item in nations"
                 :key="item.value"
@@ -57,6 +70,30 @@
                 </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="请选择您的position:" prop="position" >
+            <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getRemoteAddr($event,position)" style="width:300px" filterable>
+                <el-option
+                v-for="item in positions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="电子邮件" prop="email" >
+            <el-input v-model="ruleForm.email" ></el-input>
+          </el-form-item>
+          <el-form-item label="电话号码" prop="telnumber1" >
+            <el-input v-model="ruleForm.telnumber1" ></el-input>
+          </el-form-item>
+          <el-form-item label="电子邮件" prop="shtName" >
+            <el-input v-model="ruleForm.shtName" ></el-input>
+          </el-form-item>
+          <el-form-item label="电子邮件" prop="status" >
+            <el-input v-model="ruleForm.status" ></el-input>
+          </el-form-item>
+
+
       </el-form>
 
 
@@ -82,43 +119,36 @@ export default {
   data() {
     return {
       ruleForm: {
-        staffId:"",
-        name:"",
-        userName:"",
-        password:"",
-        passwordToo:"",
-        academic:"",
-        nation:"",
+        staffId: "",
+        name: "",
+        userName: "",
+        password: "",
+        passwordToo: "",
+        academic: "",
+        nation: ""
       },
       value: 0,
-      staffIds:[],
-      academics:[],
-      nations:[],
+      staffIds: [],
+      academics: [],
+      nations: [],
 
       rules: {
         staffId: [
-          { required:true, message:'请选择所在主体', trigger: 'change' }
+          { required: true, message: "请选择所在主体", trigger: "change" }
         ],
-        name: [
-          { required:true, message: '请输入姓名', trigger: 'blur' }
-        ],
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         userName: [
-          { required:true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: "请输入用户名", trigger: "blur" }
         ],
-        password: [
-          { required:true, message: '请输入密码', trigger: 'blur' }
-        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         passwordToo: [
-          { required:true, message: '请确认密码', trigger: 'blur' }
+          { required: true, message: "请确认密码", trigger: "blur" }
         ],
         academic: [
-          { required:true, message: '请选择学历', trigger: 'change' }
+          { required: true, message: "请选择学历", trigger: "change" }
         ],
-        nation: [
-          { required:true, message: '请选择民族', trigger: 'change'}
-        ],
+        nation: [{ required: true, message: "请选择民族", trigger: "change" }]
       }
-
     };
   },
   methods: {
@@ -130,7 +160,7 @@ export default {
       });
     },
     push(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         // console.log("remote_addr is "+this.ruleForm.remote_addr)
         if (valid) {
           const staffId = this.ruleForm.staffId;
@@ -142,29 +172,25 @@ export default {
           this.upLoading = true;
           this.$store
             .dispatch("doRegister", {
-              staffId: staffId, 
+              staffId: staffId,
               name: name,
               userName: userName,
               password: password,
-              academic: academic, 
+              academic: academic,
               nation: nation
             })
             .then(response => {
               this.upLoading = false;
               this.enumPaneIsShow = true;
               this.flage = response.data["flage"];
-                
-
             })
             .catch(function(error) {
               console.log(error);
             });
-
         }
       });
     }
   }
-
 };
 </script>
 
