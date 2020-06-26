@@ -52,9 +52,6 @@
                 </el-dialog>
             </div>
 
-            
-
-
 
             <div>
             历史病害名称<el-input v-model="diseaseName"></el-input>
@@ -66,7 +63,7 @@
                 <!-- 表格数据 -->
                 <div class="table-content">
                 <el-table :data="pageList" stripe style="width: 100%;">
-                    <el-table-column prop="id" label="病害登记编号"></el-table-column>
+                    <el-table-column prop="1" label="病害登记编号"></el-table-column>
                     <el-table-column prop="2" label="上报单位-管理所简称"></el-table-column>
                     <el-table-column prop="3" label="病害名称"></el-table-column>
                     <el-table-column prop="4" label="病害路段类型"></el-table-column>
@@ -74,7 +71,11 @@
                     <el-table-column prop="6" label="方向"></el-table-column>
                     <el-table-column prop="7" label="表现形式及成因"></el-table-column>
                     <el-table-column prop="8" label="上报日期"></el-table-column>
-                    <el-table-column prop="9" label="操作"></el-table-column>
+                    <el-table-column prop="9" label="操作">
+                        <el-button>编辑项目</el-button>
+                        <el-button>上传文件</el-button>
+                        <el-button>删除</el-button>
+                    </el-table-column>
                 </el-table>
                 <div class="block">
                     <el-pagination
@@ -107,7 +108,18 @@ export default {
       rawList: [],
       currentPage1: 1,
       pageSize: 10,
-      pageList: [],
+      pageList: [
+        {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1
+        }
+      ],
       dialogFormVisible: false,
 
       ruleForm: {
