@@ -32,7 +32,7 @@
             <el-input v-model="ruleForm.userName" ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password" >
-            <el-input v-model="ruleForm.password" ></el-input>
+            <el-input v-model="ruleForm.password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="passwordToo" >
             <el-input v-model="ruleForm.passwordToo" ></el-input>
@@ -125,8 +125,18 @@ export default {
         password: "",
         passwordToo: "",
         academic: "",
-        nation: ""
+        nation: "",
+        address: "",
+        cardId: "",
+        mobile: "",
+        photo: "",
+        position: "",
+        sex: "",
+        shtName: "",
+        status: 99
       },
+      telnumber1: "",
+      telnumber2: "",
       value: 0,
       staffIds: [],
       academics: [],
