@@ -71,7 +71,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="请选择您的position:" prop="position" >
-            <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getPosition($event,ruleForm.position)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getPositions($event,ruleForm.position)" style="width:300px" filterable>
                 <el-option
                 v-for="item in positions"
                 :key="item.value"
@@ -112,7 +112,7 @@
 
 
 <script>
-import { getPositionsByLevelType } from "@/api/register";
+// import { getPositionsByLevelType } from "@/api/register";
 
 export default {
   name: "Register",
@@ -133,7 +133,8 @@ export default {
         position: "",
         sex: "",
         shtName: "",
-        status: 99
+        status: 99,
+        level: 0,
       },
       telnumber1: "",
       telnumber2: "",
@@ -162,12 +163,12 @@ export default {
     };
   },
   methods: {
-    getPosition(callback,vc) {
+    getPositions(callback,vc) {
       var level = this.ruleForm.level
       if(callback){
         var this1 = this;
-        this1.$store
-        .dispatch("GetPosition", {
+        this.$store
+        .dispatch("GetPositions", {
           level:level
         })
         .then(response => {
