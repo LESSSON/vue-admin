@@ -35,7 +35,7 @@
             <el-input v-model="ruleForm.password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="passwordToo" >
-            <el-input v-model="ruleForm.passwordToo" ></el-input>
+            <el-input v-model="ruleForm.passwordToo" type="password"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="cardId" >
             <el-input v-model="ruleForm.cardId" ></el-input>
@@ -71,7 +71,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="请选择您的position:" prop="position" >
-            <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getRemoteAddr($event,position)" style="width:300px" filterable>
+            <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getPosition($event,ruleForm.position)" style="width:300px" filterable>
                 <el-option
                 v-for="item in positions"
                 :key="item.value"
@@ -141,7 +141,7 @@ export default {
       staffIds: [],
       academics: [],
       nations: [],
-
+      positions: [],
       rules: {
         staffId: [
           { required: true, message: "请选择所在主体", trigger: "change" }
@@ -162,12 +162,26 @@ export default {
     };
   },
   methods: {
-    GetPositionsByLevelType(value) {
-      const info = { levelType: value };
-      getPositionsByLevelType(info).then(response => {
-        this.value = response.data;
-        // console.log(response.data);
-      });
+    getPosition(callback,vc) {
+      var level = this.ruleForm.level
+      if(callback){
+        var this1 = this;
+        this1.$store
+        .dispatch("GetPosition", {
+          level:level
+        })
+        .then(response => {
+          var result = response.data["positions"];
+          this.positions = [];
+          for (var item in result){
+            var v = {"value":result[item],"label":result[item]};
+            this.positions.push(v);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
     },
     push(formName) {
       this.$refs[formName].validate(valid => {
