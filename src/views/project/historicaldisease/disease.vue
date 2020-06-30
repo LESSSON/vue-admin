@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <el-header>
-            历史病害维护   <el-button @click="dialogFormVisible = true">添加</el-button>
+            历史病害维护   <el-button type="primary" @click="dialogFormVisible = true">添加</el-button>
         </el-header>
         <el-main>
 
@@ -45,8 +45,8 @@
                             <el-input v-model="ruleForm.name" ></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button>提交</el-button>
-                            <el-button>取消</el-button>
+                            <el-button type="primary">提交</el-button>
+                            <el-button type="primary">取消</el-button>
                         </el-form-item>
                     </el-form>
                 </el-dialog>
@@ -55,7 +55,7 @@
 
             <div>
             历史病害名称<el-input v-model="diseaseName"></el-input>
-            <el-button>查询</el-button>
+            <el-button type="primary">查询</el-button>
             </div>
             
             
@@ -72,9 +72,9 @@
                     <el-table-column prop="7" label="表现形式及成因"></el-table-column>
                     <el-table-column prop="8" label="上报日期"></el-table-column>
                     <el-table-column prop="9" label="操作">
-                        <el-button>编辑项目</el-button>
-                        <el-button>上传文件</el-button>
-                        <el-button>删除</el-button>
+                        <el-button type='text'>编辑项目</el-button>
+                        <el-button type='text'>上传文件</el-button>
+                        <el-button type='text'>删除</el-button>
                     </el-table-column>
                 </el-table>
                 <div class="block">
