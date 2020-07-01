@@ -143,6 +143,7 @@ export default {
       academics: [],
       nations: [],
       positions: [],
+      sexs:[],
       rules: {
         staffId: [
           { required: true, message: "请选择所在主体", trigger: "change" }
@@ -164,15 +165,18 @@ export default {
   },
   methods: {
     getPositions(callback,vc) {
-      var level = this.ruleForm.level
+      var levelType = this.ruleForm.level
       if(callback){
         var this1 = this;
         this.$store
-        .dispatch("GetPositions", {
-          level:level
+        .dispatch("project/GetPositions", {
+          levelType:levelType
         })
         .then(response => {
-          var result = response.data["positions"];
+          console.log(response)
+          var result = response;
+          console.log("result=")
+          console.log(result)
           this.positions = [];
           for (var item in result){
             var v = {"value":result[item],"label":result[item]};
