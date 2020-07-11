@@ -32,3 +32,40 @@ export function checkUsername(userName) {
     baseURL: 'http://47.102.101.25:8088'
   })
 }
+export function doRegister(name,
+  userName,
+  password,
+  cardId,
+  sex,
+  academic,
+  nation,
+  position,
+  telnumber1,
+  telnumber2,
+  address,
+  shtName,
+  photo) {
+  return request({
+    url: '/management/company/register',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params: {
+      name,
+      userName,
+      password,
+      cardId,
+      sex,
+      academic,
+      nation,
+      position,
+      telnumber1,
+      telnumber2,
+      address,
+      shtName,
+      photo
+    },
+    baseURL: 'http://47.102.101.25:8088'
+  })
+}

@@ -300,7 +300,8 @@ export default {
         level: 0,
         email: "",
         telnumber1: "",
-        telnumber2: ""
+        telnumber2: "",
+        photo: ""
       },
 
       value: 0,
@@ -517,22 +518,37 @@ export default {
           const name = this.ruleForm.name;
           const userName = this.ruleForm.userName;
           const password = this.ruleForm.password;
+          const cardId = this.ruleForm.cardId;
+          const sex = this.ruleForm.sex;
           const academic = this.ruleForm.academic;
           const nation = this.ruleForm.nation;
-          this.upLoading = true;
+          const position = this.ruleForm.position;
+          const email = this.ruleForm.email;
+          const telnumber1 = this.ruleForm.telnumber1;
+          const telnumber2 = this.ruleForm.telnumber2;
+          const address = this.ruleForm.address;
+          const shtName = this.ruleForm.shtName;
+          const photo = this.ruleForm.photo;
+          // this.upLoading = true;
           this.$store
-            .dispatch("doRegister", {
+            .dispatch("project/DoRegister", {
               // staffId: staffId,
               name: name,
               userName: userName,
               password: password,
+              cardId: cardId,
+              sex: sex,
               academic: academic,
-              nation: nation
+              nation: nation,
+              position: position,
+              telnumber1: telnumber1,
+              telnumber2: telnumber2,
+              address: address,
+              shtName: shtName,
+              photo: photo
             })
             .then(response => {
-              this.upLoading = false;
-              this.enumPaneIsShow = true;
-              this.flage = response.data["flage"];
+              // this.upLoading = false;
             })
             .catch(function(error) {
               console.log(error);
