@@ -38,6 +38,8 @@ const actions = {
     var levelType = info.levelType
     return new Promise((resolve, reject) => {
       getWkdptShortnames(levelType).then(response => {
+        // console.log("store")
+        // console.log(response)
         const data = response.data
         resolve(data)
       }).catch(error => {

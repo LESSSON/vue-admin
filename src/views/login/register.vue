@@ -6,9 +6,9 @@
     <el-main>
       <el-form :inline="false" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-          <el-form-item label="请输入员工编号:" prop="staffId" >
+          <!-- <el-form-item label="请输入员工编号:" prop="staffId" >
             <el-input v-model="ruleForm.staffId" ></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item label="请选择您所在的主体分支:" prop="staffId" >
             <el-select v-model="ruleForm.staffIds" placeholder="请选择" @visible-change="getStaffId($event,staffId)" style="width:300px" filterable>
                 <el-option
@@ -28,8 +28,8 @@
           <el-form-item label="密码:" prop="password" >
             <el-input v-model="ruleForm.password" type="password"></el-input>
           </el-form-item>
-          <el-form-item label="确认密码:" prop="passwordToo" >
-            <el-input v-model="ruleForm.passwordToo" type="password"></el-input>
+          <el-form-item label="确认密码:" prop="repassword" >
+            <el-input v-model="ruleForm.repassword" type="password"></el-input>
           </el-form-item>
           <el-form-item label="身份证:" prop="cardId" >
             <el-input v-model="ruleForm.cardId" ></el-input>
@@ -64,7 +64,7 @@
                 </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="请选择您的position:" prop="position" >
+          <el-form-item label="请选择您的职位:" prop="position" >
             <el-select v-model="ruleForm.position" placeholder="请选择" @visible-change="getPositions($event,ruleForm.position)" style="width:300px" filterable>
                 <el-option
                 v-for="item in positions"
@@ -87,11 +87,18 @@
             <el-input v-model="ruleForm.address" ></el-input>
           </el-form-item>
           <el-form-item label="工作部门简称:" prop="shtName" >
-            <el-input v-model="ruleForm.shtName" ></el-input>
+            <el-select v-model="ruleForm.shtName" placeholder="请选择" @visible-change="getWkdptShortnames($event,ruleForm.shtName)" style="width:300px" filterable>
+                <el-option
+                v-for="item in shtNames"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="员工状态:" prop="status" >
+          <!-- <el-form-item label="员工状态:" prop="status" >
             <el-input v-model="ruleForm.status" ></el-input>
-          </el-form-item>
+          </el-form-item> -->
 
 
       </el-form>
@@ -221,13 +228,65 @@ export default {
       }
     };
 
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
+    var validateMobilePhone1 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("手机号不可为空"));
+      } else {
+        if (value !== "") {
+          var reg = /^1[3456789]\d{9}$/;
+          if (!reg.test(value)) {
+            callback(new Error("请输入有效的手机号码"));
+          }
+        }
+        callback();
+      }
+    };
+    var validateMobilePhone2 = (rule, value, callback) => {
+      if (value === "") {
+        callback();
+      } else {
+        if (value !== "") {
+          var reg = /^1[3456789]\d{9}$/;
+          if (!reg.test(value)) {
+            callback("请输入有效的手机号码");
+          }
+        }
+        callback();
+      }
+    };
+
+    var validateEmail = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请正确填写邮箱"));
+      } else {
+        if (value !== "") {
+          var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+          if (!reg.test(value)) {
+            callback(new Error("请输入有效的邮箱"));
+          }
+        }
+        callback();
+      }
+    };
+
     return {
       ruleForm: {
-        staffId: "",
+        // staffId: "",
         name: "",
         userName: "",
         password: "",
-        passwordToo: "",
+        repassword: "",
+        cardId: "",
         academic: "",
         nation: "",
         address: "",
@@ -238,10 +297,12 @@ export default {
         sex: "",
         shtName: "",
         status: 99,
-        level: 0
+        level: 0,
+        email: "",
+        telnumber1: "",
+        telnumber2: ""
       },
-      telnumber1: "",
-      telnumber2: "",
+
       value: 0,
       academics: [
         { value: "01", label: "全日制普通博士学位研究生" },
@@ -317,27 +378,40 @@ export default {
         { value: 56, label: "基诺族" }
       ],
       positions: [],
+      shtNames: [],
       sexs: [
         { value: "男", label: "男" },
         { value: "女", label: "女" }
       ],
       rules: {
-        staffId: [
-          { required: true, message: "请选择所在主体", trigger: "change" }
-        ],
+        // staffId: [
+        //   { required: true, message: "请选择所在主体", trigger: "change" }
+        // ],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+
         userName: [
           { required: true, message: "请输入用户名", trigger: "blur" },
           { validator: validate, trigger: "blur" }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        passwordToo: [
-          { required: true, message: "请确认密码", trigger: "blur" }
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            pattern: /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{8,30}$/,
+            message:
+              "密码为数字，小写字母，大写字母，特殊符号 至少包含三种，长度为 8 - 30位，密码不能包含 用户名 （判断的时候不区分大小写)"
+          }
+        ],
+        repassword: [
+          { required: true, message: "请确认密码", trigger: "blur" },
+          { validator: validatePass2, trigger: "blur" }
         ],
         academic: [
           { required: true, message: "请选择学历", trigger: "change" }
         ],
         nation: [{ required: true, message: "请选择民族", trigger: "change" }],
+        position: [
+          { required: true, message: "请选择职位", trigger: "change" }
+        ],
         sex: [{ required: true, message: "请选择性别", trigger: "change" }],
         cardId: [
           { required: true, message: "请输入证件号", trigger: "blur" },
@@ -346,7 +420,24 @@ export default {
             message: "请输入正确的证件号"
           },
           { validator: idCardValidity, trigger: "blur" }
-        ]
+        ],
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { validator: validateEmail, trigger: "blur" }
+        ],
+        telnumber1: [
+          { required: true, message: "请输入电话号码", trigger: "blur" },
+          { validator: validateMobilePhone1, trigger: "blur" }
+        ],
+        telnumber2: [
+          { required: false, message: "请输入电话号码", trigger: "blur" }
+          // { validator: validateMobilePhone2 }
+        ],
+        address: [{ required: true, message: "请输入地址", trigger: "blur" }],
+        shtName: [
+          { required: true, message: "请输入工作部门", trigger: "blur" }
+        ],
+        status: [{ required: true, message: "请输入员工状态", trigger: "blur" }]
       }
     };
   },
@@ -377,6 +468,7 @@ export default {
     },
 
     getWkdptShortnames(callback, vc) {
+      var levelType = this.ruleForm.level;
       if (callback) {
         var this1 = this;
         this.$store
@@ -388,10 +480,10 @@ export default {
             var result = response;
             console.log("result=");
             console.log(result);
-            this.positions = [];
+            this.shtNames = [];
             for (var item in result) {
               var v = { value: result[item], label: result[item] };
-              this.positions.push(v);
+              this.shtNames.push(v);
             }
           })
           .catch(function(error) {
@@ -421,7 +513,7 @@ export default {
       this.$refs[formName].validate(valid => {
         // console.log("remote_addr is "+this.ruleForm.remote_addr)
         if (valid) {
-          const staffId = this.ruleForm.staffId;
+          // const staffId = this.ruleForm.staffId;
           const name = this.ruleForm.name;
           const userName = this.ruleForm.userName;
           const password = this.ruleForm.password;
@@ -430,7 +522,7 @@ export default {
           this.upLoading = true;
           this.$store
             .dispatch("doRegister", {
-              staffId: staffId,
+              // staffId: staffId,
               name: name,
               userName: userName,
               password: password,
