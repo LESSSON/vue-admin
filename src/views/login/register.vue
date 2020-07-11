@@ -549,6 +549,7 @@ export default {
             })
             .then(response => {
               // this.upLoading = false;
+              this.$router.push("/login");
             })
             .catch(function(error) {
               console.log(error);
