@@ -53,8 +53,9 @@
             </div>
 
             <div>
+              <div class="table-content">
                 <el-dialog title="历史病害信息文件上传" :visible.sync="fileVisible">
-                <el-table :data="pageList" stripe style="width: 100%;">
+                <el-table :data="fileList" stripe style="width: 100%;">
                     <el-table-column prop="1" label="病害信息编号"></el-table-column>
                     <el-table-column prop="2" label="文件描述"></el-table-column>
                     <el-table-column prop="3" label="文件标题"></el-table-column>
@@ -62,11 +63,12 @@
                     <el-table-column prop="5" label="操作人员"></el-table-column>
                     <el-table-column prop="6" label="编辑"></el-table-column>
                     <el-table-column prop="7" label="删除"></el-table-column>
-                    <el-table-column prop="9" label="查看文件">
+                    <el-table-column prop="8" label="查看文件">
                         <el-button type='text'>查看文件</el-button>
                     </el-table-column>
                 </el-table>
                 </el-dialog>
+                </div>
             </div>
 
 
@@ -137,6 +139,18 @@ export default {
           "8": 1
         }
       ],
+      fileList: [
+        {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1
+        }
+      ],
+
       dialogFormVisible: false,
       fileVisible: false,
       ruleForm: {

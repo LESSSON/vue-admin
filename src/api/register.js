@@ -52,7 +52,7 @@ export function doRegister(name,
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
     // },
-    params: {
+    data: {
       name,
       userName,
       password,
