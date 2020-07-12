@@ -92,7 +92,7 @@ const project = {
         doRegister(name, userName, password, cardId, sex, academic, nation, position, mobile, telnumber1, telnumber2, address, shtName, photo).then(response => {
           // console.log(response)
           commit('SET_CONTENT_TYPE', 0)
-          const data = response.data
+          const data = response.status
           resolve(data)
         }).catch(error => {
           commit('SET_CONTENT_TYPE', 0)

@@ -69,10 +69,10 @@
       </el-button>
     </el-form>
 
-    <div class="tips">
+    <!-- <div class="tips">
       <span style="margin-right:20px;">username: admin</span>
       <span> password: any</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
