@@ -40,6 +40,7 @@ export function doRegister(name,
   academic,
   nation,
   position,
+  mobile,
   telnumber1,
   telnumber2,
   address,
@@ -48,9 +49,9 @@ export function doRegister(name,
   return request({
     url: '/management/company/register',
     method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // },
     params: {
       name,
       userName,
@@ -60,6 +61,7 @@ export function doRegister(name,
       academic,
       nation,
       position,
+      mobile,
       telnumber1,
       telnumber2,
       address,

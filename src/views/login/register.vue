@@ -77,10 +77,13 @@
           <el-form-item label="电子邮件:" prop="email" >
             <el-input v-model="ruleForm.email" ></el-input>
           </el-form-item>
-          <el-form-item label="电话号码:" prop="telnumber1" >
+          <el-form-item label="电话号码:" prop="mobile" >
+            <el-input v-model="ruleForm.mobile" ></el-input>
+          </el-form-item>
+          <el-form-item label="其他电话号码1:" prop="telnumber1" >
             <el-input v-model="ruleForm.telnumber1" ></el-input>
           </el-form-item>
-          <el-form-item label="电话号码2:" prop="telnumber2" >
+          <el-form-item label="其他电话号码2:" prop="telnumber2" >
             <el-input v-model="ruleForm.telnumber2" ></el-input>
           </el-form-item>
           <el-form-item label="地址:" prop="address" >
@@ -129,7 +132,7 @@ export default {
       // checkUsername(value).then(res => {
       var this1 = this;
       this.$store
-        .dispatch("project/CheckUsername", {
+        .dispatch("CheckUsername", {
           userName: value
         })
         .then(response => {
@@ -306,77 +309,80 @@ export default {
 
       value: 0,
       academics: [
-        { value: "01", label: "全日制普通博士学位研究生" },
         {
-          value: "02",
+          value: "全日制普通博士学位研究生",
+          label: "全日制普通博士学位研究生"
+        },
+        {
+          value: "全日制普通硕士学位研究生(包括学术型硕士和专业硕士)",
           label: "全日制普通硕士学位研究生(包括学术型硕士和专业硕士)"
         },
-        { value: "03", label: "全日制普通第二学士学位" },
-        { value: "04", label: "全日制普通本科" },
-        { value: "05", label: "全日制普通专科(高职)" },
-        { value: "06", label: "成人教育大类" },
-        { value: "07", label: "高中" },
-        { value: "08", label: "初中" },
-        { value: "09", label: "小学" },
-        { value: "10", label: "其他" }
+        { value: "全日制普通第二学士学位", label: "全日制普通第二学士学位" },
+        { value: "全日制普通本科", label: "全日制普通本科" },
+        { value: "全日制普通专科(高职)", label: "全日制普通专科(高职)" },
+        { value: "成人教育大类", label: "成人教育大类" },
+        { value: "高中", label: "高中" },
+        { value: "初中", label: "初中" },
+        { value: "小学", label: "小学" },
+        { value: "其他", label: "其他" }
       ],
       nations: [
-        { value: 1, label: "汉族" },
-        { value: 2, label: "蒙古族" },
-        { value: 3, label: "回族" },
-        { value: 4, label: "藏族" },
-        { value: 5, label: "维吾尔族" },
-        { value: 6, label: "苗族" },
-        { value: 7, label: "彝族" },
-        { value: 8, label: "壮族" },
-        { value: 9, label: "布依族" },
-        { value: 10, label: "朝鲜族" },
-        { value: 11, label: "满族" },
-        { value: 12, label: "侗族" },
-        { value: 13, label: "瑶族" },
-        { value: 14, label: "白族" },
-        { value: 15, label: "土家族" },
-        { value: 16, label: "哈尼族" },
-        { value: 17, label: "哈萨克族" },
-        { value: 18, label: "傣族" },
-        { value: 19, label: "黎族" },
-        { value: 20, label: "傈僳族" },
-        { value: 21, label: "佤族" },
-        { value: 22, label: "畲族" },
-        { value: 23, label: "高山族" },
-        { value: 24, label: "拉祜族" },
-        { value: 25, label: "水族" },
-        { value: 26, label: "东乡族" },
-        { value: 27, label: "纳西族" },
-        { value: 28, label: "景颇族" },
-        { value: 29, label: "柯尔克孜族" },
-        { value: 30, label: "土族" },
-        { value: 31, label: "达翰尔族" },
-        { value: 32, label: "么佬族" },
-        { value: 33, label: "羌族" },
-        { value: 34, label: "布朗族" },
-        { value: 35, label: "撒拉族" },
-        { value: 36, label: "毛南族" },
-        { value: 37, label: "仡佬族" },
-        { value: 38, label: "锡伯族" },
-        { value: 39, label: "阿昌族" },
-        { value: 40, label: "普米族" },
-        { value: 41, label: "塔吉克族" },
-        { value: 42, label: "怒族" },
-        { value: 43, label: "乌孜别克族" },
-        { value: 44, label: "俄罗斯族" },
-        { value: 45, label: "鄂温克族" },
-        { value: 46, label: "德昂族" },
-        { value: 47, label: "保安族" },
-        { value: 48, label: "裕固族" },
-        { value: 49, label: "京族" },
-        { value: 50, label: "塔塔尔族" },
-        { value: 51, label: "独龙族" },
-        { value: 52, label: "鄂伦春族" },
-        { value: 53, label: "赫哲族" },
-        { value: 54, label: "门巴族" },
-        { value: 55, label: "珞巴族" },
-        { value: 56, label: "基诺族" }
+        { value: "汉族", label: "汉族" },
+        { value: "蒙古族", label: "蒙古族" },
+        { value: "回族", label: "回族" },
+        { value: "藏族", label: "藏族" },
+        { value: "维吾尔族", label: "维吾尔族" },
+        { value: "苗族", label: "苗族" },
+        { value: "彝族", label: "彝族" },
+        { value: "壮族", label: "壮族" },
+        { value: "布依族", label: "布依族" },
+        { value: "朝鲜族", label: "朝鲜族" },
+        { value: "满族", label: "满族" },
+        { value: "侗族", label: "侗族" },
+        { value: "瑶族", label: "瑶族" },
+        { value: "白族", label: "白族" },
+        { value: "土家族", label: "土家族" },
+        { value: "哈尼族", label: "哈尼族" },
+        { value: "哈萨克族", label: "哈萨克族" },
+        { value: "傣族", label: "傣族" },
+        { value: "黎族", label: "黎族" },
+        { value: "傈僳族", label: "傈僳族" },
+        { value: "佤族", label: "佤族" },
+        { value: "畲族", label: "畲族" },
+        { value: "高山族", label: "高山族" },
+        { value: "拉祜族", label: "拉祜族" },
+        { value: "水族", label: "水族" },
+        { value: "东乡族", label: "东乡族" },
+        { value: "纳西族", label: "纳西族" },
+        { value: "景颇族", label: "景颇族" },
+        { value: "柯尔克孜族", label: "柯尔克孜族" },
+        { value: "土族", label: "土族" },
+        { value: "达翰尔族", label: "达翰尔族" },
+        { value: "么佬族", label: "么佬族" },
+        { value: "羌族", label: "羌族" },
+        { value: "布朗族", label: "布朗族" },
+        { value: "撒拉族", label: "撒拉族" },
+        { value: "毛南族", label: "毛南族" },
+        { value: "仡佬族", label: "仡佬族" },
+        { value: "锡伯族", label: "锡伯族" },
+        { value: "阿昌族", label: "阿昌族" },
+        { value: "普米族", label: "普米族" },
+        { value: "塔吉克族", label: "塔吉克族" },
+        { value: "怒族", label: "怒族" },
+        { value: "乌孜别克族", label: "乌孜别克族" },
+        { value: "俄罗斯族", label: "俄罗斯族" },
+        { value: "鄂温克族", label: "鄂温克族" },
+        { value: "德昂族", label: "德昂族" },
+        { value: "保安族", label: "保安族" },
+        { value: "裕固族", label: "裕固族" },
+        { value: "京族", label: "京族" },
+        { value: "塔塔尔族", label: "塔塔尔族" },
+        { value: "独龙族", label: "独龙族" },
+        { value: "鄂伦春族", label: "鄂伦春族" },
+        { value: "赫哲族", label: "赫哲族" },
+        { value: "门巴族", label: "门巴族" },
+        { value: "珞巴族", label: "珞巴族" },
+        { value: "基诺族", label: "基诺族" }
       ],
       positions: [],
       shtNames: [],
@@ -448,7 +454,8 @@ export default {
       if (callback) {
         var this1 = this;
         this.$store
-          .dispatch("project/GetPositions", {
+          .dispatch("GetPositions", {
+            // .dispatch("project/GetPositions", {
             levelType: levelType
           })
           .then(response => {
@@ -473,7 +480,7 @@ export default {
       if (callback) {
         var this1 = this;
         this.$store
-          .dispatch("project/GetWkdptShortnames", {
+          .dispatch("GetWkdptShortnames", {
             levelType: levelType
           })
           .then(response => {
@@ -497,7 +504,7 @@ export default {
       if (callback) {
         var this1 = this;
         this.$store
-          .dispatch("project/CheckUsername", {
+          .dispatch("CheckUsername", {
             userName: this.ruleForm.userName
           })
           .then(response => {
@@ -524,6 +531,8 @@ export default {
           const nation = this.ruleForm.nation;
           const position = this.ruleForm.position;
           const email = this.ruleForm.email;
+          const mobile = this.ruleForm.mobile;
+
           const telnumber1 = this.ruleForm.telnumber1;
           const telnumber2 = this.ruleForm.telnumber2;
           const address = this.ruleForm.address;
@@ -531,7 +540,7 @@ export default {
           const photo = this.ruleForm.photo;
           // this.upLoading = true;
           this.$store
-            .dispatch("project/DoRegister", {
+            .dispatch("DoRegister", {
               // staffId: staffId,
               name: name,
               userName: userName,
@@ -541,6 +550,7 @@ export default {
               academic: academic,
               nation: nation,
               position: position,
+              mobile: mobile,
               telnumber1: telnumber1,
               telnumber2: telnumber2,
               address: address,
