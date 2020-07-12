@@ -39,7 +39,7 @@ export function getDisTreatTypes() {
     baseURL: 'http://47.102.101.25:8088'
   })
 }
-// 上传历史灾害信息关联文件信息
+// 获取灾害记录
 export function getHistoryDisInfos(limit, offset) {
   return request({
     url: '/management/company/get-history-disInfos',

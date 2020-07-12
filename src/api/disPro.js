@@ -40,7 +40,7 @@ export function addDisProInfo(
 
 
 // 删除历史病害立项信息
-export function deleteDisProInfo(iproIdd) {
+export function deleteDisProInfo(proId) {
   return request({
     url: '/management/company/delete-dis-pro-info',
     method: 'delete',
@@ -69,7 +69,8 @@ export function getDisProInfos(limit, offset) {
     url: '/management/company/get-dis-pro-infos',
     method: 'get',
     params: {
-      proName
+      limit,
+      offset
     },
     baseURL: 'http://47.102.101.25:8088'
   })
