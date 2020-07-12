@@ -317,7 +317,7 @@ const project = {
           status,
           treatType,
           userName, ).then(response => {
-          const data = response.data
+          const data = response.status
           resolve(data)
         }).catch(error => {
           reject(error)
