@@ -2,10 +2,10 @@ import {
   getPositions
 } from '@/api/register'
 import {
-  getWkdptShortnames
+  getDptNames
 } from '@/api/register'
 import {
-  checkUsername
+  checkJobId
 } from '@/api/register'
 import {
   doRegister
@@ -24,16 +24,12 @@ const project = {
   },
 
   actions: {
-    // const actions = {
 
     GetPositions({
       commit
     }, info) {
       return new Promise((resolve, reject) => {
-
-        var levelType = info.levelType
-        console.log(levelType)
-        getPositions(levelType).then(response => {
+        getPositions().then(response => {
           const data = response.data
           resolve(data)
         }).catch(error => {
@@ -41,12 +37,11 @@ const project = {
         })
       })
     },
-    GetWkdptShortnames({
+    GetDptNames({
       commit
     }, info) {
-      var levelType = info.levelType
       return new Promise((resolve, reject) => {
-        getWkdptShortnames(levelType).then(response => {
+        getDptNames().then(response => {
           // console.log("store")
           // console.log(response)
           const data = response.data
@@ -56,12 +51,12 @@ const project = {
         })
       })
     },
-    CheckUsername({
+    CheckJobId({
       commit
     }, info) {
-      var userName = info.userName
+      var jobId = info.jobId
       return new Promise((resolve, reject) => {
-        checkUsername(userName).then(response => {
+        checkJobId(jobId).then(response => {
           // console.log(response)
           const data = response.status
           resolve(data)
@@ -74,22 +69,24 @@ const project = {
       commit
     }, info) {
       var name = info.name
-      var userName = info.userName
+      var jobId = info.jobId
       var password = info.password
       var cardId = info.cardId
       var sex = info.sex
-      var academic = info.academic
       var nation = info.nation
+      var academic = info.academic
       var position = info.position
+      var dptName = info.dptName
       var mobile = info.mobile
-      var telnumber1 = info.telnumber1
-      var telnumber2 = info.telnumber2
+      var email = info.email
+      var otherTel1 = info.otherTel1
+      var otherTel2 = info.otherTel2
       var address = info.address
-      var shtName = info.shtName
-      var photo = info.photo
+      var status = info.status
       commit('SET_CONTENT_TYPE', 1)
       return new Promise((resolve, reject) => {
-        doRegister(name, userName, password, cardId, sex, academic, nation, position, mobile, telnumber1, telnumber2, address, shtName, photo).then(response => {
+        doRegister(name, jobId, password, cardId, sex, nation, academic,
+          position, dptName, mobile, email, otherTel1, otherTel2, address, status).then(response => {
           // console.log(response)
           commit('SET_CONTENT_TYPE', 0)
           const data = response.data
