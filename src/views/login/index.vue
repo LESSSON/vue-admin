@@ -83,6 +83,7 @@
       </div>
     </el-form>
 
+
     <el-dialog title="填写注册信息" :visible="regVisible" :before-close="handleCloseOrCancel">
       <el-form :inline="false" :model="regForm" :rules="regRules" ref="regForm" label-width="120px" class="demo-regForm">
 
@@ -173,6 +174,12 @@
         <el-button @click="handleCloseOrCancel">取消</el-button>
       </span>
     </el-dialog>
+
+
+    <!-- <div class="tips">
+      <span style="margin-right:20px;">username: admin</span>
+      <span> password: any</span>
+    </div> -->
 
   </div>
 </template>

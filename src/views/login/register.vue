@@ -432,7 +432,7 @@ export default {
           { required: true, message: "请输入邮箱", trigger: "blur" },
           { validator: validateEmail, trigger: "blur" }
         ],
-        telnumber1: [
+        mobile: [
           { required: true, message: "请输入电话号码", trigger: "blur" },
           { validator: validateMobilePhone1, trigger: "blur" }
         ],
@@ -559,7 +559,12 @@ export default {
             })
             .then(response => {
               // this.upLoading = false;
-              this.$router.push("/login");
+              if (response == "success") {
+                alert("注册成功，即将跳转到登录页面");
+                this.$router.push("/login");
+              } else {
+                alert("注册失败，请重试");
+              }
             })
             .catch(function(error) {
               console.log(error);

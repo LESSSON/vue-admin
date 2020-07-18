@@ -50,7 +50,9 @@ export function doRegister(
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
     // },
-    data : {
+
+    data: {
+
       name,
       jobId,
       password,
