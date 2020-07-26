@@ -100,6 +100,33 @@
     <el-dialog title="填写注册信息" :visible="regVisible" :before-close="handleCloseOrCancel">
       <el-form :inline="false" :model="regForm" :rules="regRules" ref="regForm" label-width="120px" class="demo-regForm">
 
+      <el-form-item prop="organizationType" label="请选择您的组织"> 
+        <!-- <span class="svg-container">
+          <svg-icon icon-class="tree"/>
+        </span> -->
+        <el-select v-model="regForm.organizationType" placeholder="请选择您的组织">
+          <el-option label="高速公路公司" value="company"/>
+          <el-option label="施工方" value="constructor"/>
+          <el-option label="监理方" value="supervisor"/>
+          <el-option label="超级管理员" value="super-admin"/>
+        </el-select>
+      </el-form-item>
+
+
+      <el-form-item prop="dptName" label="请选择您的工作单位">
+        <!-- <span class="svg-container">
+          <svg-icon icon-class="tree"/>
+        </span> -->
+        <el-select v-model="regForm.dptName" placeholder="请选择您的工作单位" @visible-change="getDptNamesInReg($event)">
+                <el-option
+                v-for="item in dptNames"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+        </el-select>
+      </el-form-item>
+
         <el-form-item label="姓名:" prop="name" >
           <el-input v-model="regForm.name" />
         </el-form-item>
@@ -115,7 +142,7 @@
         <el-form-item label="身份证:" prop="cardId" >
           <el-input v-model="regForm.cardId" />
         </el-form-item>
-        <el-form-item label="性别:" prop="sex" >
+        <el-form-item label="性别:" prop="sex" v-if="regForm.organizationType === 'company'">
           <el-select v-model="regForm.sex" placeholder="请选择" style="width:300px" filterable>
             <el-option
               v-for="item in sexs"
@@ -125,7 +152,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学历:" prop="academic" >
+        <el-form-item label="学历:" prop="academic" v-if="regForm.organizationType === 'company'">
           <el-select v-model="regForm.academic" placeholder="请选择" style="width:300px" filterable>
             <el-option
               v-for="item in academics"
@@ -135,7 +162,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="民族:" prop="nation" >
+        <el-form-item label="民族:" prop="nation" v-if="regForm.organizationType === 'company'">
           <el-select v-model="regForm.nation" placeholder="请选择" style="width:300px" filterable>
             <el-option
               v-for="item in nations"
@@ -145,8 +172,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="职位:" prop="position" >
-          <el-select v-model="regForm.position" placeholder="请选择" @visible-change="getPositions($event)" style="width:300px" filterable>
+        <el-form-item label="职位:" prop="position" v-if="regForm.organizationType === 'company'">
+          <el-select v-model="regForm.position" placeholder="请选择" @visible-change="getPositions($event)" style="width:300px" filterable >
             <el-option
               v-for="item in positions"
               :key="item.value"
@@ -155,22 +182,32 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item prop="type" label="请选择您的职位" v-if="regForm.organizationType !== 'company'">   
+        <!-- <span class="svg-container">
+          <svg-icon icon-class="tree"/>
+        </span> -->
+        <el-select v-model="regForm.type" placeholder="请选择您的职位" >
+          <el-option label="管理员" value="00"/>
+          <el-option label="负责人" value="02"/>
+          <el-option label="工程师" value="05"/>
+        </el-select>
+      </el-form-item>
         <el-form-item label="电子邮件:" prop="email" >
           <el-input v-model="regForm.email" />
         </el-form-item>
         <el-form-item label="电话号码:" prop="mobile" >
           <el-input v-model="regForm.mobile" />
         </el-form-item>
-        <el-form-item label="其他号码1:" prop="otherTel1" >
+        <el-form-item label="其他号码1:" prop="otherTel1" v-if="regForm.organizationType === 'company'">
           <el-input v-model="regForm.otherTel1" />
         </el-form-item>
-        <el-form-item label="其他号码2:" prop="otherTel2" >
+        <el-form-item label="其他号码2:" prop="otherTel2" v-if="regForm.organizationType === 'company'">
           <el-input v-model="regForm.otherTel2" />
         </el-form-item>
-        <el-form-item label="地址:" prop="address" >
+        <el-form-item label="地址:" prop="address" v-if="regForm.organizationType === 'company'">
           <el-input v-model="regForm.address" />
         </el-form-item>
-        <el-form-item label="工作部门:" prop="dptName" >
+        <!-- <el-form-item label="工作部门:" prop="dptName" >
           <el-select v-model="regForm.dptName" placeholder="请选择" @visible-change="getDptNames($event)" style="width:300px" filterable>
             <el-option
               v-for="item in dptNames"
@@ -179,7 +216,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
 
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -206,19 +243,58 @@ export default {
   name: "Login",
   data() {
     let validateRegJobId = (rule, value, callback) => {
-      this.$store
-        .dispatch("CheckJobId", { jobId: value })
-        .then(response => {
-          console.log(response);
-          if (response == "success") {
-            callback();
-          } else {
-            callback("用户名已存在");
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      if (this.regForm.organizationType === "company") {
+        this.$store
+          .dispatch("CheckCompanyJobId", {
+            jobId: value,
+            dptName: this.regForm.dptName
+          })
+          .then(response => {
+            console.log(response);
+            if (response == "success") {
+              callback();
+            } else {
+              callback("用户名已存在");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else if (this.regForm.organizationType === "constructor") {
+        this.$store
+          .dispatch("CheckConstructorJobId", {
+            jobId: value,
+            unitName: this.regForm.dptName
+          })
+          .then(response => {
+            console.log(response);
+            if (response == "success") {
+              callback();
+            } else {
+              callback("用户名已存在");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else if (this.regForm.organizationType === "supervisor") {
+        this.$store
+          .dispatch("CheckSupervisorJobId", {
+            jobId: value,
+            unitName: this.regForm.dptName
+          })
+          .then(response => {
+            console.log(response);
+            if (response == "success") {
+              callback();
+            } else {
+              callback("用户名已存在");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     };
     let idCardValidity = (rule, code, callback) => {
       var city = {
@@ -358,6 +434,8 @@ export default {
       regVisible: false,
 
       regForm: {
+        organizationType: null,
+        dptName: null,
         name: null,
         jobId: null,
         password: null,
@@ -367,7 +445,6 @@ export default {
         nation: null,
         academic: null,
         position: null,
-        dptName: null,
         mobile: null,
         email: null,
         otherTel1: null,
@@ -465,8 +542,10 @@ export default {
       dptNames: [],
 
       regRules: {
+        organizationType: [
+          { required: true, message: "请选择组织", trigger: "blur" }
+        ],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-
         jobId: [
           { required: true, message: "请输入工号/用户名", trigger: "blur" },
           { validator: validateRegJobId, trigger: "blur" }
@@ -485,9 +564,9 @@ export default {
           { validator: validatePass2, trigger: "blur" }
         ],
         academic: [
-          { required: true, message: "请选择学历", trigger: "change" }
+          { required: false, message: "请选择学历", trigger: "change" }
         ],
-        nation: [{ required: true, message: "请选择民族", trigger: "change" }],
+        nation: [{ required: false, message: "请选择民族", trigger: "change" }],
         position: [
           { required: true, message: "请选择职位", trigger: "change" }
         ],
@@ -597,9 +676,9 @@ export default {
           this.$store
             .dispatch("GetDptNamesFromCompany", {})
             .then(response => {
-              console.log(response);
+              // console.log(response);
               var result = response;
-              console.log("result=" + result);
+              // console.log("result=" + result);
               this.dptNames = [];
               for (var item in result) {
                 var v = { value: result[item], label: result[item] };
@@ -613,9 +692,9 @@ export default {
           this.$store
             .dispatch("GetDptNamesFromConstructor", {})
             .then(response => {
-              console.log(response);
+              // console.log(response);
               var result = response;
-              console.log("result=" + result);
+              // console.log("result=" + result);
               this.dptNames = [];
               for (var item in result) {
                 var v = { value: result[item], label: result[item] };
@@ -629,9 +708,66 @@ export default {
           this.$store
             .dispatch("GetDptNamesFromSupervisor", {})
             .then(response => {
-              console.log(response);
+              // console.log(response);
               var result = response;
-              console.log("result=" + result);
+              // console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        }
+      }
+    },
+    getDptNamesInReg(callback, vc) {
+      // console.log("do getDptNames");
+      if (callback) {
+        // console.log("do callback ");
+        // console.log(this.regForm.organizationType);
+        if (this.regForm.organizationType === "company") {
+          // console.log("do gsgl");
+          this.$store
+            .dispatch("GetDptNamesFromCompany", {})
+            .then(response => {
+              // console.log(response);
+              var result = response;
+              // console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        } else if (this.regForm.organizationType === "constructor") {
+          this.$store
+            .dispatch("GetDptNamesFromConstructor", {})
+            .then(response => {
+              // console.log(response);
+              var result = response;
+              // console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        } else if (this.regForm.organizationType === "supervisor") {
+          this.$store
+            .dispatch("GetDptNamesFromSupervisor", {})
+            .then(response => {
+              // console.log(response);
+              var result = response;
+              // console.log("result=" + result);
               this.dptNames = [];
               for (var item in result) {
                 var v = { value: result[item], label: result[item] };
@@ -650,52 +786,124 @@ export default {
     },
 
     register() {
-      this.$refs["regForm"].validate(valid => {
-        if (valid) {
-          const name = this.regForm.name;
-          const jobId = this.regForm.jobId;
-          const password = this.regForm.password;
-          const cardId = this.regForm.cardId;
-          const sex = this.regForm.sex;
-          const nation = this.regForm.nation;
-          const academic = this.regForm.academic;
-          const position = this.regForm.position;
-          const dptName = this.regForm.dptName;
-          const mobile = this.regForm.mobile;
-          const email = this.regForm.email;
-          const otherTel1 = this.regForm.otherTel1;
-          const otherTel2 = this.regForm.otherTel2;
-          const address = this.regForm.address;
-          const status = this.regForm.status;
-          this.$store
-            .dispatch("DoRegister", {
-              name: name,
-              jobId: jobId,
-              password: password,
-              cardId: cardId,
-              sex: sex,
-              academic: academic,
-              nation: nation,
-              position: position,
-              mobile: mobile,
-              otherTel1: otherTel1,
-              otherTel2: otherTel2,
-              email: email,
-              address: address,
-              dptName: dptName,
-              status: status
-            })
-            .then(response => {
-              this.$message.success("注册已提交，请等待审核通过！");
-              this.regVisible = false;
-              this.$router.push("/login");
-            })
-            .catch(function(error) {
-              this.$message.error("提交注册信息异常，请稍后重试！");
-              console.log(error);
-            });
-        }
-      });
+      if (this.regForm.organizationType === "company") {
+        this.$refs["regForm"].validate(valid => {
+          if (valid) {
+            const name = this.regForm.name;
+            const jobId = this.regForm.jobId;
+            const password = this.regForm.password;
+            const cardId = this.regForm.cardId;
+            const sex = this.regForm.sex;
+            const nation = this.regForm.nation;
+            const academic = this.regForm.academic;
+            const position = this.regForm.position;
+            const dptName = this.regForm.dptName;
+            const mobile = this.regForm.mobile;
+            const email = this.regForm.email;
+            const otherTel1 = this.regForm.otherTel1;
+            const otherTel2 = this.regForm.otherTel2;
+            const address = this.regForm.address;
+            const status = this.regForm.status;
+            this.$store
+              .dispatch("DoCompanyRegister", {
+                name: name,
+                jobId: jobId,
+                password: password,
+                cardId: cardId,
+                sex: sex,
+                academic: academic,
+                nation: nation,
+                position: position,
+                mobile: mobile,
+                otherTel1: otherTel1,
+                otherTel2: otherTel2,
+                email: email,
+                address: address,
+                dptName: dptName,
+                status: status
+              })
+              .then(response => {
+                this.$message.success("注册已提交，请等待审核通过！");
+                this.regVisible = false;
+                this.$router.push("/login");
+              })
+              .catch(function(error) {
+                this.$message.error("提交注册信息异常，请稍后重试！");
+                console.log(error);
+              });
+          }
+        });
+      } else if (this.regForm.organizationType === "constructor") {
+        this.$refs["regForm"].validate(valid => {
+          if (valid) {
+            const name = this.regForm.name;
+            const jobId = this.regForm.jobId;
+            const password = this.regForm.password;
+            const idCard = this.regForm.cardId;
+            const telNumber = this.regForm.mobile;
+            const email = this.regForm.email;
+            const status = this.regForm.status;
+            const type = this.regForm.type;
+            const unitName = this.regForm.dptName;
+            this.$store
+              .dispatch("DoConstructorRegister", {
+                name: name,
+                jobId: jobId,
+                password: password,
+                idCard: idCard,
+                telNumber: telNumber,
+                email: email,
+                status: status,
+                type: type,
+                unitName: unitName
+              })
+              .then(response => {
+                this.$message.success("注册已提交，请等待审核通过！");
+                this.regVisible = false;
+                this.$router.push("/login");
+              })
+              .catch(function(error) {
+                this.$message.error("提交注册信息异常，请稍后重试！");
+                console.log(error);
+              });
+          }
+        });
+      } else if (this.regForm.organizationType === "supervisor") {
+        this.$refs["regForm"].validate(valid => {
+          if (valid) {
+            const name = this.regForm.name;
+            const jobId = this.regForm.jobId;
+            const password = this.regForm.password;
+            const idCard = this.regForm.cardId;
+            const telNumber = this.regForm.mobile;
+            const email = this.regForm.email;
+            const status = this.regForm.status;
+            const type = this.regForm.type;
+            const unitName = this.regForm.dptName;
+            this.$store
+              .dispatch("DoSupervisorRegister", {
+                name: name,
+                jobId: jobId,
+                password: password,
+                idCard: idCard,
+                telNumber: telNumber,
+                email: email,
+                status: status,
+                type: type,
+                unitName: unitName
+              })
+              .then(response => {
+                this.$message.success("注册已提交，请等待审核通过！");
+                this.regVisible = false;
+                this.$router.push("/login");
+              })
+              .catch(function(error) {
+                this.$message.error("提交注册信息异常，请稍后重试！");
+                console.log(error);
+              });
+          }
+        });
+      }
     }
   }
 };

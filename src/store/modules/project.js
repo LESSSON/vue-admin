@@ -11,10 +11,22 @@ import {
   getDptNamesFromSupervisor
 } from '@/api/register'
 import {
-  checkJobId
+  checkCompanyJobId
 } from '@/api/register'
 import {
-  doRegister
+  checkConstructorJobId
+} from '@/api/register'
+import {
+  checkSupervisorJobId
+} from '@/api/register'
+import {
+  doCompanyRegister
+} from '@/api/register'
+import {
+  doConstructorRegister
+} from '@/api/register'
+import {
+  doSupervisorRegister
 } from '@/api/register'
 
 // history.js
@@ -145,12 +157,13 @@ const project = {
         })
       })
     },
-    CheckJobId({
+    CheckCompanyJobId({
       commit
     }, info) {
       var jobId = info.jobId
+      var dptName = info.dptName
       return new Promise((resolve, reject) => {
-        checkJobId(jobId).then(response => {
+        checkCompanyJobId(jobId, dptName).then(response => {
           // console.log(response)
           const data = response.status
           resolve(data)
@@ -159,7 +172,37 @@ const project = {
         })
       })
     },
-    DoRegister({
+    CheckConstructorJobId({
+      commit
+    }, info) {
+      var jobId = info.jobId
+      var unitName = info.unitName
+      return new Promise((resolve, reject) => {
+        checkConstructorJobId(jobId, unitName).then(response => {
+          // console.log(response)
+          const data = response.status
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    CheckSupervisorJobId({
+      commit
+    }, info) {
+      var jobId = info.jobId
+      var unitName = info.unitName
+      return new Promise((resolve, reject) => {
+        checkSupervisorJobId(jobId, unitName).then(response => {
+          // console.log(response)
+          const data = response.status
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    DoCompanyRegister({
       commit
     }, info) {
       var name = info.name
@@ -179,8 +222,74 @@ const project = {
       var status = info.status
       commit('SET_CONTENT_TYPE', 1)
       return new Promise((resolve, reject) => {
-        doRegister(name, jobId, password, cardId, sex, nation, academic,
+        doCompanyRegister(name, jobId, password, cardId, sex, nation, academic,
           position, dptName, mobile, email, otherTel1, otherTel2, address, status).then(response => {
+          // console.log(response)
+          commit('SET_CONTENT_TYPE', 0)
+          const data = response.status
+          resolve(data)
+        }).catch(error => {
+          commit('SET_CONTENT_TYPE', 0)
+          reject(error)
+        })
+      })
+    },
+    DoConstructorRegister({
+      commit
+    }, info) {
+      var name = info.name
+      var jobId = info.jobId
+      var password = info.password
+      var idCard = info.cardId
+      var telNumber = info.telNumber
+      var email = info.email
+      var status = info.status
+      var type = info.type
+      var unitName = info.unitName
+      commit('SET_CONTENT_TYPE', 1)
+      return new Promise((resolve, reject) => {
+        doConstructorRegister(name,
+          jobId,
+          password,
+          idCard,
+          telNumber,
+          email,
+          status,
+          type,
+          unitName).then(response => {
+          // console.log(response)
+          commit('SET_CONTENT_TYPE', 0)
+          const data = response.status
+          resolve(data)
+        }).catch(error => {
+          commit('SET_CONTENT_TYPE', 0)
+          reject(error)
+        })
+      })
+    },
+    DoSupervisorRegister({
+      commit
+    }, info) {
+      var name = info.name
+      var jobId = info.jobId
+      var password = info.password
+      var idCard = info.cardId
+      var telNumber = info.telNumber
+      var email = info.email
+      var status = info.status
+      var type = info.type
+      var unitName = info.unitName
+      commit('SET_CONTENT_TYPE', 1)
+      return new Promise((resolve, reject) => {
+        doSupervisorRegister(name,
+          jobId,
+          password,
+          idCard,
+          telNumber,
+          email,
+          status,
+          type,
+          unitName, ).then(response => {
           // console.log(response)
           commit('SET_CONTENT_TYPE', 0)
           const data = response.status

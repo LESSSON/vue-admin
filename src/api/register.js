@@ -32,18 +32,41 @@ export function getDptNamesFromSupervisor() {
   })
 }
 
-export function checkJobId(jobId) {
+export function checkCompanyJobId(jobId, dptName) {
   return request({
     url: '/management/company/check-jobId',
     method: 'get',
     params: {
-      jobId
+      jobId,
+      dptName
+    },
+    baseURL: 'http://47.102.101.25:8088'
+  })
+}
+export function checkConstructorJobId(jobId, unitName) {
+  return request({
+    url: '/management/constructor/check-jobId',
+    method: 'get',
+    params: {
+      jobId,
+      unitName
+    },
+    baseURL: 'http://47.102.101.25:8088'
+  })
+}
+export function checkSupervisorJobId(jobId, unitName) {
+  return request({
+    url: '/management/supervisor/check-jobId',
+    method: 'get',
+    params: {
+      jobId,
+      unitName
     },
     baseURL: 'http://47.102.101.25:8088'
   })
 }
 
-export function doRegister(
+export function doCompanyRegister(
   name,
   jobId,
   password,
@@ -84,6 +107,70 @@ export function doRegister(
       otherTel2,
       address,
       status
+    },
+    baseURL: 'http://47.102.101.25:8088'
+  })
+}
+export function doConstructorRegister(
+  name,
+  jobId,
+  password,
+  idCard,
+  telNumber,
+  email,
+  status,
+  type,
+  unitName,
+) {
+  return request({
+    url: '/management/constructor/register',
+    method: 'post',
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // },
+
+    data: {
+      name,
+      jobId,
+      password,
+      idCard,
+      telNumber,
+      email,
+      status,
+      type,
+      unitName,
+    },
+    baseURL: 'http://47.102.101.25:8088'
+  })
+}
+export function doSupervisorRegister(
+  name,
+  jobId,
+  password,
+  idCard,
+  telNumber,
+  email,
+  status,
+  type,
+  unitName,
+) {
+  return request({
+    url: '/management/supervisor/register',
+    method: 'post',
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // },
+
+    data: {
+      name,
+      jobId,
+      password,
+      idCard,
+      telNumber,
+      email,
+      status,
+      type,
+      unitName,
     },
     baseURL: 'http://47.102.101.25:8088'
   })
