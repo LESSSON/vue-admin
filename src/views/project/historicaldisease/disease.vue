@@ -92,7 +92,7 @@
 
             <div>
             历史病害名称<el-input v-model="diseaseName"></el-input>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="getHistoryDisInfosByDisName()">查询</el-button>
             </div>
             
             
@@ -344,6 +344,18 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
+        });
+    },
+
+    getHistoryDisInfosByDisName() {
+      const diseaseName = this.diseaseName;
+      this.$store
+        .dispatch("GetHistoryDisInfosByDisName", { diseaseName })
+        .then(response => {
+          if (response.status == "success") {
+            const diseases = response.data;
+            this.rawList = diseases;
+          }
         });
     },
 

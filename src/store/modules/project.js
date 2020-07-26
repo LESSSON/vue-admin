@@ -2,7 +2,13 @@ import {
   getPositions
 } from '@/api/register'
 import {
-  getDptNames
+  getDptNamesFromCompany
+} from '@/api/register'
+import {
+  getDptNamesFromConstructor
+} from '@/api/register'
+import {
+  getDptNamesFromSupervisor
 } from '@/api/register'
 import {
   checkJobId
@@ -97,11 +103,39 @@ const project = {
         })
       })
     },
-    GetDptNames({
+    GetDptNamesFromCompany({
       commit
     }, info) {
       return new Promise((resolve, reject) => {
-        getDptNames().then(response => {
+        getDptNamesFromCompany().then(response => {
+          // console.log("store")
+          // console.log(response)
+          const data = response.data
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    GetDptNamesFromConstructor({
+      commit
+    }, info) {
+      return new Promise((resolve, reject) => {
+        getDptNamesFromConstructor().then(response => {
+          // console.log("store")
+          // console.log(response)
+          const data = response.data
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    GetDptNamesFromSupervisor({
+      commit
+    }, info) {
+      return new Promise((resolve, reject) => {
+        getDptNamesFromSupervisor().then(response => {
           // console.log("store")
           // console.log(response)
           const data = response.data

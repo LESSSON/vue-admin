@@ -25,7 +25,20 @@
           <el-option label="监理方" value="supervisor"/>
           <el-option label="超级管理员" value="super-admin"/>
         </el-select>
+      </el-form-item>
 
+      <el-form-item prop="dptName">
+        <span class="svg-container">
+          <svg-icon icon-class="tree"/>
+        </span>
+        <el-select v-model="loginForm.dptName" placeholder="请选择您的工作单位" @visible-change="getDptNames($event)">
+                <el-option
+                v-for="item in dptNames"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="jobId">
@@ -328,12 +341,14 @@ export default {
     return {
       loginForm: {
         organizationType: null,
+        dptName: null,
         jobId: null,
         password: null
       },
 
       loginRules: {
         organizationType: [{ required: true, message: "请选择您的组织！" }],
+        organizationDpt: [{ required: true, message: "请选择您的工作单位！" }],
         jobId: [
           { required: true, message: "请输入工号或用户名", trigger: "blur" }
         ],
@@ -573,22 +588,60 @@ export default {
     },
 
     getDptNames(callback, vc) {
+      // console.log("do getDptNames");
       if (callback) {
-        this.$store
-          .dispatch("GetDptNames", {})
-          .then(response => {
-            console.log(response);
-            var result = response;
-            console.log("result=" + result);
-            this.dptNames = [];
-            for (var item in result) {
-              var v = { value: result[item], label: result[item] };
-              this.dptNames.push(v);
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+        // console.log("do callback ");
+        console.log(this.loginForm.organizationType);
+        if (this.loginForm.organizationType === "company") {
+          // console.log("do gsgl");
+          this.$store
+            .dispatch("GetDptNamesFromCompany", {})
+            .then(response => {
+              console.log(response);
+              var result = response;
+              console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        } else if (this.loginForm.organizationType === "constructor") {
+          this.$store
+            .dispatch("GetDptNamesFromConstructor", {})
+            .then(response => {
+              console.log(response);
+              var result = response;
+              console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        } else if (this.loginForm.organizationType === "supervisor") {
+          this.$store
+            .dispatch("GetDptNamesFromSupervisor", {})
+            .then(response => {
+              console.log(response);
+              var result = response;
+              console.log("result=" + result);
+              this.dptNames = [];
+              for (var item in result) {
+                var v = { value: result[item], label: result[item] };
+                this.dptNames.push(v);
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        }
       }
     },
 
