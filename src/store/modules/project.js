@@ -208,7 +208,7 @@ const project = {
       var name = info.name
       var jobId = info.jobId
       var password = info.password
-      var cardId = info.cardId
+      var cardId = info.idCard
       var sex = info.sex
       var nation = info.nation
       var academic = info.academic
@@ -240,7 +240,9 @@ const project = {
       var name = info.name
       var jobId = info.jobId
       var password = info.password
-      var idCard = info.cardId
+      var idCard = info.idCard
+      console.log("idCard")
+      console.log(idCard)
       var telNumber = info.telNumber
       var email = info.email
       var status = info.status
@@ -273,7 +275,9 @@ const project = {
       var name = info.name
       var jobId = info.jobId
       var password = info.password
-      var idCard = info.cardId
+      var idCard = info.idCard
+      console.log("idCard")
+      console.log(idCard)
       var telNumber = info.telNumber
       var email = info.email
       var status = info.status
