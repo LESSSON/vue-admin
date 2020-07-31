@@ -25,21 +25,8 @@ service.interceptors.request.use(
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
+      // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
     }
-    console.log("store.getters.post_flag")
-    console.log(store.getters.post_flag)
-
-    // if (store.getters.post_flag === 1) {
-    //   console.log("utils")
-    //   config.headers['Content-Type'] = 'application/json'
-    //   // config.headers['header']['Content-Type'] = 'application/json'
-    //   config.headers['head']['Content-Type'] = 'application/json'
-    //   config.headers['post']['Content-Type'] = 'application/json'
-    //   config.headers['patch']['Content-Type'] = 'application/json'
-    //   config.headers['put']['Content-Type'] = 'application/json'
-    //   console.log(config.headers)
-    // }
-    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     return config
   },
   error => {

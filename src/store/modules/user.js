@@ -42,19 +42,19 @@ const actions = {
   login({
     commit
   }, userInfo) {
-    // console.log("userInfo")
-    // console.log(userInfo)
-    const {
-      jobId,
-      organizationType,
-      password
-    } = userInfo
+    console.log(userInfo)
+    const jobId = userInfo.jobId
+    const organizationType = userInfo.organizationType
+    const password = userInfo.password
+    const dptOrUnitName = userInfo.dptName
+    console.log(organizationType)
     return new Promise((resolve, reject) => {
-      login({
-        username: jobId.trim(),
-        organizationType: organizationType,
-        password: password
-      }).then(response => {
+      login(
+        jobId.trim(),
+        organizationType,
+        password,
+        String(dptOrUnitName)
+      ).then(response => {
         const {
           data
         } = response
