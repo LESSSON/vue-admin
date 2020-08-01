@@ -10,7 +10,6 @@ import request from '@/utils/request'
 
 export function login(dptOrUnitName, jobId, password, organizationType) {
   return request({
-    // url: decodeURI('/' + organizationType + '/login'),
     url: '/' + organizationType + '/login',
     method: 'post',
     data: {

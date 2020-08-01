@@ -47,13 +47,12 @@ const actions = {
     const organizationType = userInfo.organizationType
     const password = userInfo.password
     const dptOrUnitName = userInfo.dptName
-    console.log(organizationType)
     return new Promise((resolve, reject) => {
       login(
         jobId.trim(),
-        organizationType,
         password,
-        String(dptOrUnitName)
+        dptOrUnitName,
+        organizationType
       ).then(response => {
         const {
           data
