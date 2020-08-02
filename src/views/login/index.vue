@@ -100,7 +100,7 @@
     <el-dialog title="填写注册信息" :visible="regVisible" :before-close="handleCloseOrCancel">
       <el-form :inline="false" :model="regForm" :rules="regRules" ref="regForm" label-width="120px" class="demo-regForm">
 
-      <el-form-item prop="organizationType" label="请选择您的组织"> 
+      <el-form-item prop="organizationType" label="请选择您的组织">
         <!-- <span class="svg-container">
           <svg-icon icon-class="tree"/>
         </span> -->
@@ -182,7 +182,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="type" label="请选择您的职位" v-if="regForm.organizationType !== 'company'">   
+        <el-form-item prop="type" label="请选择您的职位" v-if="regForm.organizationType !== 'company'">
         <!-- <span class="svg-container">
           <svg-icon icon-class="tree"/>
         </span> -->
@@ -976,7 +976,7 @@ $light_gray: #eee;
     padding: 35px 35px 0;
     background-color: white;
     border-radius: 15px;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 10%;
     overflow: hidden;
   }
