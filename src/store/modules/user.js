@@ -38,6 +38,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_DATA: (state, data) => {
+    state.data = data
   }
 }
 
@@ -79,6 +82,8 @@ const actions = {
         console.log(data)
         commit('SET_TOKEN', data.token)
         commit('SET_NAME', data.jobid)
+        commit('SET_DATA', data)
+
         setToken(data.token)
         resolve()
       }).catch(error => {
