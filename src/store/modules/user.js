@@ -42,21 +42,36 @@ const actions = {
   login({
     commit
   }, userInfo) {
-    console.log(userInfo)
+    // console.log(userInfo)
     const jobId = userInfo.jobId
+    // const username = userInfo.jobId
     const organizationType = userInfo.organizationType
     const password = userInfo.password
     const dptOrUnitName = userInfo.dptName
     return new Promise((resolve, reject) => {
       login(
+        // username,
         jobId.trim(),
+        // username.trim(),
         password,
         dptOrUnitName,
-        organizationType
+        organizationType,
       ).then(response => {
-        const {
-          data
-        } = response
+
+        // const {
+        //   data
+        // } = response
+        const data = response
+        console.log("response")
+        console.log(data)
+        // data['token'] = {
+        //   roles: [organizationType],
+        //   introduction: 'I am in ' + organizationType,
+        //   avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        //   name: organizationType + ' worker'
+        // }
+        data['token'] = organizationType + '-token'
+        console.log(data)
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()

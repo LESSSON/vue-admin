@@ -241,8 +241,8 @@ const project = {
       var jobId = info.jobId
       var password = info.password
       var idCard = info.idCard
-      console.log("idCard")
-      console.log(idCard)
+      // console.log("idCard")
+      // console.log(idCard)
       var telNumber = info.telNumber
       var email = info.email
       var status = info.status

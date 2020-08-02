@@ -17,7 +17,7 @@ export function login(dptOrUnitName, jobId, password, organizationType) {
       jobId,
       password
     },
-    baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 

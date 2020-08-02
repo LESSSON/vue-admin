@@ -2,6 +2,15 @@ const tokens = {
   admin: {
     token: 'admin-token'
   },
+  company: {
+    token: 'company-token'
+  },
+  constructor: {
+    token: 'constructor-token'
+  },
+  supervisor: {
+    token: 'supervisor-token'
+  },
   editor: {
     token: 'editor-token'
   },
@@ -20,6 +29,24 @@ const users = {
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'
+  },
+  'company-token': {
+    roles: ['company'],
+    introduction: 'I am a company workers',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'company workers'
+  },
+  'constructor-token': {
+    roles: ['constructor'],
+    introduction: 'I am a constructor workers',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'constructor workers'
+  },
+  'supervisor-token': {
+    roles: ['supervisor'],
+    introduction: 'I am a supervisor workers',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'supervisor workers'
   }
 }
 
@@ -35,7 +62,7 @@ module.exports = [
         username
       } = config.body
       const token = tokens[username]
-
+      // console.log(token)
       // mock error
       if (!token) {
         return {
