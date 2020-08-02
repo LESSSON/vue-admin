@@ -75,14 +75,14 @@
                 <el-table :data="fileList" stripe style="width: 100%;" >
 <!--                    <el-table-column prop="disRegId" label="病害信息编号"></el-table-column>-->
                     <el-table-column prop="fileName" label="文件名"></el-table-column>
-                    <el-table-column prop="recentModifytime" label="修改时间"></el-table-column>
+                    <el-table-column prop="recentModifyTime" label="修改时间"></el-table-column>
                     <!-- <el-table-column prop="3" label="文件标题"></el-table-column> -->
                     <!-- <el-table-column prop="4" label="上传日期"></el-table-column> -->
                     <!-- <el-table-column prop="5" label="操作人员"></el-table-column> -->
                     <!-- <el-table-column prop="6" label="编辑"></el-table-column> -->
                     <!-- <el-table-column prop="7" label="删除"></el-table-column> -->
                     <el-table-column label="操作">
-                      <template slot-scope="scope" >
+                      <template slot-scope="scope">
                         <el-button type='text'>查看文件</el-button>
                         <el-button type="danger" icon="el-icon-delete" size="small" circle @click="deleteFile(scope.row.fileName)"></el-button>
                       </template>
@@ -103,6 +103,7 @@
                     :file-list="fileForm.fileList"
                     :auto-upload="false"
                     :limit="3"
+                    :on-success="doUploadSuccess"
                     :action=getUploadUrl()
                     class="upload-demo">
                     <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -169,19 +170,19 @@
                     <el-table-column prop="location" label="位置编号"></el-table-column>
                     <el-table-column prop="repCost" label="建议费用"></el-table-column>
                     <el-table-column prop="repPreMethod" label="防治方法"></el-table-column>
-                    <el-table-column prop="reportDate" label="上报日期"></el-table-column>
+                    <el-table-column prop="reportDate" label="上报日期" :formatter="dateFormat" width="100px"></el-table-column>
                     <el-table-column prop="roadType" label="路段类型"></el-table-column>
-                    <el-table-column prop="branchName" label="上报管理所"></el-table-column>
-                    <el-table-column prop="manageName" label="管辖分公司"></el-table-column>
+                    <el-table-column prop="branchName" label="管辖分公司"></el-table-column>
+                    <el-table-column prop="manageName" label="上报管理所"></el-table-column>
 <!--                    <el-table-column prop="status" label="当前状态"></el-table-column>-->
                     <el-table-column prop="treatType" label="处理类型"></el-table-column>
 <!--                    <el-table-column prop="userName" label="用户名"></el-table-column>-->
                     <el-table-column label="操作">
                       <template slot-scope="scope" >
-                        <el-button type='text'>编辑</el-button>
-                        <el-button type='text' @click="fileOperate(scope.row)">文件</el-button>
+                        <el-button type='text' style="margin-left: 8px">编辑</el-button>
+                        <el-button type='text' @click="fileOperate(scope.row)" style="color: green">文件</el-button>
 <!--                        <el-button type='text' @click="editFile(scope.row)">上传文件</el-button>-->
-                        <el-button type='text'>删除</el-button>
+                        <el-button type='text' style="color: red">删除</el-button>
                       </template>
                     </el-table-column>
                 </el-table>
@@ -207,7 +208,9 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
+import moment from 'moment';
 import {getDisNames, getDisRoadTypes, getDisTreatTypes} from "../../../api/historyDis";
+import {getFileList} from "../../../api/file";
 export default {
   name: "disease",
   data() {
@@ -231,18 +234,7 @@ export default {
           "8": 1
         }
       ],
-      fileList: [
-        // {
-        //   "disRegId": 1,
-        //   "2": 1,
-        //   "3": 1,
-        //   "4": 1,
-        //   "5": 1,
-        //   "6": 1,
-        //   "7": 1
-        // }
-      ],
-
+      fileList: [],
       upLoadFileList: [],
       row: "",
       dialogFormVisible: false,
@@ -341,6 +333,19 @@ export default {
   },
 
   methods: {
+
+    doUploadSuccess() {
+      this.uploadfileVisible = false;
+      this.$store
+        .dispatch("GetFileList", {
+          type: this.type,
+          typeId: this.typeId
+        })
+        .then(response => {
+          this.fileList = response;
+        });
+    },
+
     handleSizeChange: function(pageSize) {
       this.pageSize = pageSize;
       this.handleCurrentChange(this.currentPage1);
@@ -438,7 +443,26 @@ export default {
     },
 
     deleteFile(fileName) {
-      this.$http.delete("http://47.102.101.25:8088/management/file/" + this.type + "/" + this.typeId + "/" + fileName)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'error',
+        center: true
+      }).then(() => {
+        this.$http.delete("http://47.102.101.25:8088/management/file/" + this.type + "/" + this.typeId + "/" + fileName);
+        this.fileList = this.fileList.filter((item) => {
+          return item.fileName !== fileName;
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
 
     deleteHistoryDisInfo(id) {
@@ -486,6 +510,16 @@ export default {
             this.rawList = diseases;
           }
         });
+    },
+
+    dateFormat :function(row,column){
+
+      var date = row[column.property];
+
+      if(date == undefined){return ''};
+
+      return moment(date).format("YYYY-MM-DD HH:mm:ss")
+
     },
 
     fileOperate(row) {
