@@ -9,7 +9,9 @@ import { mapGetters } from "vuex";
 export default {
   name: "index",
   data() {
-    return {};
+    return {
+      data: ""
+    };
   },
 
   created() {
