@@ -17,7 +17,7 @@ export function addDisProInfo(
   userName,
 ) {
   return request({
-    url: '/management/company/add-dis-pro-info',
+    url: '/company/add-dis-pro-info',
     method: 'post',
     data: {
       auditName,
@@ -42,7 +42,7 @@ export function addDisProInfo(
 // 删除历史病害立项信息
 export function deleteDisProInfo(proId) {
   return request({
-    url: '/management/company/delete-dis-pro-info',
+    url: '/company/delete-dis-pro-info',
     method: 'delete',
     params: {
       proId
@@ -55,7 +55,7 @@ export function deleteDisProInfo(proId) {
 // 根根据立项名称获取立项信息
 export function getDisProInfoByProName(proName) {
   return request({
-    url: '/management/company/get-dis-pro-info-by-proName',
+    url: '/company/get-dis-pro-info-by-proName',
     method: 'get',
     params: {
       proName
@@ -66,7 +66,7 @@ export function getDisProInfoByProName(proName) {
 // 按登记时间分页获取立项信息
 export function getDisProInfos(limit, offset) {
   return request({
-    url: '/management/company/get-dis-pro-infos',
+    url: '/company/get-dis-pro-infos',
     method: 'get',
     params: {
       limit,
@@ -93,7 +93,7 @@ export function modifyDisProInfo(
   userName,
 ) {
   return request({
-    url: '/management/company/modify-dis-file-info',
+    url: '/company/modify-dis-file-info',
     method: 'put',
     params: {
       auditName,

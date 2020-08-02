@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getPositions() {
   return request({
-    url: '/management/company/get-positions',
+    url: '/company/get-positions',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
   })
@@ -10,7 +10,7 @@ export function getPositions() {
 // 高速公路公司
 export function getDptNamesFromCompany() {
   return request({
-    url: '/management/company/get-dpt-names',
+    url: '/company/get-dpt-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
   })
@@ -18,7 +18,7 @@ export function getDptNamesFromCompany() {
 // 施工方
 export function getDptNamesFromConstructor() {
   return request({
-    url: '/management/constructor/get-unit-names',
+    url: '/constructor/get-unit-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
   })
@@ -26,7 +26,7 @@ export function getDptNamesFromConstructor() {
 // 监理方
 export function getDptNamesFromSupervisor() {
   return request({
-    url: '/management/supervisor/get-unit-names',
+    url: '/supervisor/get-unit-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
   })
@@ -34,7 +34,7 @@ export function getDptNamesFromSupervisor() {
 
 export function checkCompanyJobId(jobId, dptName) {
   return request({
-    url: '/management/company/check-jobId',
+    url: '/company/check-jobId',
     method: 'get',
     params: {
       jobId,
@@ -45,7 +45,7 @@ export function checkCompanyJobId(jobId, dptName) {
 }
 export function checkConstructorJobId(jobId, unitName) {
   return request({
-    url: '/management/constructor/check-jobId',
+    url: '/constructor/check-jobId',
     method: 'get',
     params: {
       jobId,
@@ -56,7 +56,7 @@ export function checkConstructorJobId(jobId, unitName) {
 }
 export function checkSupervisorJobId(jobId, unitName) {
   return request({
-    url: '/management/supervisor/check-jobId',
+    url: '/supervisor/check-jobId',
     method: 'get',
     params: {
       jobId,
@@ -84,7 +84,7 @@ export function doCompanyRegister(
   status
 ) {
   return request({
-    url: '/management/company/register',
+    url: '/company/register',
     method: 'post',
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
@@ -123,7 +123,7 @@ export function doConstructorRegister(
   unitName,
 ) {
   return request({
-    url: '/management/constructor/register',
+    url: '/constructor/register',
     method: 'post',
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
@@ -155,7 +155,7 @@ export function doSupervisorRegister(
   unitName,
 ) {
   return request({
-    url: '/management/supervisor/register',
+    url: '/supervisor/register',
     method: 'post',
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'

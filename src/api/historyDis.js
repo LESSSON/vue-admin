@@ -4,7 +4,7 @@ import request from '@/utils/request'
 // 根据历史灾害信息id，获取关联文件信息列表
 export function getDisFileInfos(disRegId) {
   return request({
-    url: '/management/company/get-dis-file-infos',
+    url: '/company/get-dis-file-infos',
     method: 'get',
     params: {
       disRegId
@@ -15,16 +15,16 @@ export function getDisFileInfos(disRegId) {
 // 获取病害名
 export function getDisNames() {
   return request({
-    url: '/management/company/get-disNames',
+    url: '/company/get-disNames',
     method: 'get',
     params: {},
-    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取路段类型名
 export function getDisRoadTypes() {
   return request({
-    url: '/management/company/get-disRoad-types',
+    url: '/company/get-disRoad-types',
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
@@ -33,7 +33,7 @@ export function getDisRoadTypes() {
 // 获取病害治理类型名
 export function getDisTreatTypes() {
   return request({
-    url: '/management/company/get-disTreat-types',
+    url: '/company/get-disTreat-types',
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
@@ -42,7 +42,7 @@ export function getDisTreatTypes() {
 // 获取灾害记录
 export function getHistoryDisInfos(limit, offset) {
   return request({
-    url: '/management/company/get-history-disInfos',
+    url: '/company/get-history-disInfos',
     method: 'get',
     params: {
       limit,
@@ -54,7 +54,7 @@ export function getHistoryDisInfos(limit, offset) {
 // 获取灾害记录
 export function getHistoryDisInfosByDisName(disName) {
   return request({
-    url: '/management/company/get-history-disInfos-by-disName',
+    url: '/company/get-history-disInfos-by-disName',
     method: 'get',
     params: {
       disName,
@@ -68,12 +68,12 @@ export function getHistoryDisInfosByDisName(disName) {
 // 删除历史灾害信息关联文件信息
 export function delDisFileInfo(id) {
   return request({
-    url: '/management/company/del-dis-file-info',
+    url: '/company/del-dis-file-info',
     method: 'delete',
     params: {
       id
     },
-    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -88,7 +88,7 @@ export function addDisFileInfo(
   userName,
 ) {
   return request({
-    url: '/management/company/add-dis-file-info',
+    url: '/company/add-dis-file-info',
     method: 'post',
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
@@ -123,7 +123,7 @@ export function addHistoryDisInfo(
   userName,
 ) {
   return request({
-    url: '/management/company/add-history-disInfo',
+    url: '/company/add-history-disInfo',
     method: 'post',
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded'
@@ -152,7 +152,7 @@ export function addHistoryDisInfo(
 export function modifyDisFileInfo(
   disRegId, fileDes, fileName, fileTitle, fileType, uploadDate, userName) {
   return request({
-    url: '/management/company/modify-dis-file-info',
+    url: '/company/modify-dis-file-info',
     method: 'put',
     params: {
       disRegId,
