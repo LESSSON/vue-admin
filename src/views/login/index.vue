@@ -23,7 +23,7 @@
           <el-option label="高速公路公司" value="company"/>
           <el-option label="施工方" value="constructor"/>
           <el-option label="监理方" value="supervisor"/>
-          <el-option label="超级管理员" value="super-admin"/>
+          <el-option label="超级管理员" value="super"/>
         </el-select>
       </el-form-item>
 
@@ -108,7 +108,7 @@
           <el-option label="高速公路公司" value="company"/>
           <el-option label="施工方" value="constructor"/>
           <el-option label="监理方" value="supervisor"/>
-          <el-option label="超级管理员" value="super-admin"/>
+          <el-option label="超级管理员" value="super"/>
         </el-select>
       </el-form-item>
 
@@ -628,8 +628,12 @@ export default {
             .dispatch("user/login", this.loginForm)
             .then(() => {
               this.loading = false;
-              // this.$router.push({ path: this.redirect || "/" });
-              this.$router.push({ path: "/" });
+              if (this.loginForm.organizationType == "super") {
+                this.$router.push({ path: "/approval" });
+              } else {
+                this.$router.push({ path: this.redirect || "/" });
+              }
+              // this.$router.push({ path: "/" });
             })
             .catch(() => {
               this.loading = false;

@@ -5,7 +5,7 @@
           <el-table-column prop="recentModifytime" label="修改时间"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope" >
-              <el-button type='text' @click="do(scope.row)">审核</el-button>
+              <el-button type='text' @click="verifyStaff(scope.row)">审核</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -22,7 +22,7 @@ export default {
     };
   },
   methods: {
-    do(row) {
+    verifyStaff(row) {
       const id = row.id;
       const organizationType = this.roles[0];
       this.$store
@@ -36,7 +36,9 @@ export default {
         });
     },
     getUnverifiedStaffs() {
-      const dptName = this.data.dptName;
+      console.log("data");
+      console.log(this.data);
+      const dptName = "子系统管理员";
       this.$store
         .dispatch("GetUnverifiedStaffs", { dptName })
         .then(response => {
