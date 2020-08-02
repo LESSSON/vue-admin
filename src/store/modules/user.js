@@ -66,8 +66,8 @@ const actions = {
         //   data
         // } = response
         const data = response
-        console.log("response")
-        console.log(data)
+        // console.log("response")
+        // console.log(data)
         // data['token'] = {
         //   roles: [organizationType],
         //   introduction: 'I am in ' + organizationType,
@@ -75,8 +75,10 @@ const actions = {
         //   name: organizationType + ' worker'
         // }
         data['token'] = organizationType + '-token'
+        data['jobid'] = jobId.trim()
         console.log(data)
         commit('SET_TOKEN', data.token)
+        commit('SET_NAME', data.jobid)
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -96,17 +98,18 @@ const actions = {
           data
         } = response
 
+
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
         const {
-          name,
+          // name,
           avatar,
           roles
         } = data
 
-        commit('SET_NAME', name)
+        // commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_ROLES', roles)
         resolve(data)
