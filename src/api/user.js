@@ -8,7 +8,7 @@ import request from '@/utils/request'
 //   })
 // }
 
-export function login(dptOrUnitName, jobId, password, organizationType) {
+export function login(jobId, password, dptOrUnitName, organizationType) {
   return request({
     url: '/' + organizationType + '/login',
     method: 'post',
