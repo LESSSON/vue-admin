@@ -42,12 +42,12 @@ export const constantRoutes = [{
     component: () => import('@/views/login/register'),
     // hidden: true
   },
-  // {
-  //   path: '/index',
-  //   // redirect: '/register',
-  //   component: () => import('@/views/project/index'),
-  //   // hidden: true
-  // },
+  {
+    path: '/approval',
+    // redirect: '/register',
+    component: () => import('@/views/project/approval'),
+    // hidden: true
+  },
 
   {
     path: '/404',
@@ -142,7 +142,7 @@ export const constantRoutes = [{
         title: 'index',
         icon: 'dashboard'
       }
-    }, ]
+    }]
   },
 
 

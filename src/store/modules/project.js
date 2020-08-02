@@ -28,6 +28,12 @@ import {
 import {
   doSupervisorRegister
 } from '@/api/register'
+import {
+  verifyStaff
+} from '@/api/register'
+import {
+  getUnverifiedStaffs
+} from '@/api/register'
 
 // history.js
 import {
@@ -303,6 +309,35 @@ const project = {
           resolve(data)
         }).catch(error => {
           commit('SET_CONTENT_TYPE', 0)
+          reject(error)
+        })
+      })
+    },
+
+    VerifyStaff({
+      commit
+    }, info) {
+      return new Promise((resolve, reject) => {
+        var id = info.id
+        var organizationType = info.organizationType
+        verifyStaff(id, organizationType).then(response => {
+          const data = response.data
+          resolve(data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    GetUnverifiedStaffs({
+      commit
+    }, info) {
+      return new Promise((resolve, reject) => {
+        var dptName = info.dptName
+        getUnverifiedStaffs(dptName, 10, 0).then(response => {
+          const data = response.data
+          resolve(data)
+        }).catch(error => {
           reject(error)
         })
       })
