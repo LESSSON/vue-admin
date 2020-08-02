@@ -5,7 +5,7 @@ export function getFileList(type, typeId) {
     url: '/management/company/' + type + "/" + typeId + '/fileList',
     method: 'get',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function delFile(type, typeId, fileName) {
@@ -13,7 +13,7 @@ export function delFile(type, typeId, fileName) {
     url: '/management/company/' + type + "/" + typeId + '/' + fileName,
     method: 'delete',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function uploadFile(type, typeId) {
@@ -25,6 +25,6 @@ export function uploadFile(type, typeId) {
       type,
       typeId
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }

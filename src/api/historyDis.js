@@ -9,7 +9,7 @@ export function getDisFileInfos(disRegId) {
     params: {
       disRegId
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取病害名
@@ -18,7 +18,7 @@ export function getDisNames() {
     url: '/management/company/get-disNames',
     method: 'get',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取路段类型名
@@ -27,7 +27,7 @@ export function getDisRoadTypes() {
     url: '/management/company/get-disRoad-types',
     method: 'get',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取病害治理类型名
@@ -36,7 +36,7 @@ export function getDisTreatTypes() {
     url: '/management/company/get-disTreat-types',
     method: 'get',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取灾害记录
@@ -48,7 +48,7 @@ export function getHistoryDisInfos(limit, offset) {
       limit,
       offset
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 获取灾害记录
@@ -59,7 +59,7 @@ export function getHistoryDisInfosByDisName(disName) {
     params: {
       disName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -73,7 +73,7 @@ export function delDisFileInfo(id) {
     params: {
       id
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -102,7 +102,7 @@ export function addDisFileInfo(
       uploadDate,
       userName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 新增历史病害信息
@@ -144,7 +144,7 @@ export function addHistoryDisInfo(
       treatType,
       userName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -163,6 +163,6 @@ export function modifyDisFileInfo(
       uploadDate,
       userName
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088/'
   })
 }

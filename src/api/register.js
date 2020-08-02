@@ -4,7 +4,7 @@ export function getPositions() {
   return request({
     url: '/management/company/get-positions',
     method: 'get',
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 高速公路公司
@@ -12,7 +12,7 @@ export function getDptNamesFromCompany() {
   return request({
     url: '/management/company/get-dpt-names',
     method: 'get',
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 施工方
@@ -20,7 +20,7 @@ export function getDptNamesFromConstructor() {
   return request({
     url: '/management/constructor/get-unit-names',
     method: 'get',
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 // 监理方
@@ -28,7 +28,7 @@ export function getDptNamesFromSupervisor() {
   return request({
     url: '/management/supervisor/get-unit-names',
     method: 'get',
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -40,7 +40,7 @@ export function checkCompanyJobId(jobId, dptName) {
       jobId,
       dptName
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function checkConstructorJobId(jobId, unitName) {
@@ -51,7 +51,7 @@ export function checkConstructorJobId(jobId, unitName) {
       jobId,
       unitName
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function checkSupervisorJobId(jobId, unitName) {
@@ -62,7 +62,7 @@ export function checkSupervisorJobId(jobId, unitName) {
       jobId,
       unitName
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -108,7 +108,7 @@ export function doCompanyRegister(
       address,
       status
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function doConstructorRegister(
@@ -140,7 +140,7 @@ export function doConstructorRegister(
       type,
       unitName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 export function doSupervisorRegister(
@@ -172,6 +172,6 @@ export function doSupervisorRegister(
       type,
       unitName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }

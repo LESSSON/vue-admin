@@ -34,7 +34,7 @@ export function addDisProInfo(
       shtNameSup,
       userName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -47,7 +47,7 @@ export function deleteDisProInfo(proId) {
     params: {
       proId
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -72,7 +72,7 @@ export function getDisProInfos(limit, offset) {
       limit,
       offset
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
 
@@ -110,6 +110,6 @@ export function modifyDisProInfo(
       shtNameSup,
       userName,
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
   })
 }
