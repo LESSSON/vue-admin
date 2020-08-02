@@ -35,6 +35,8 @@ export function addDisProInfo(
       userName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management',
+
   })
 }
 
@@ -48,6 +50,8 @@ export function deleteDisProInfo(proId) {
       proId
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 
@@ -60,7 +64,9 @@ export function getDisProInfoByProName(proName) {
     params: {
       proName
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 // 按登记时间分页获取立项信息
@@ -73,6 +79,8 @@ export function getDisProInfos(limit, offset) {
       offset
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 
@@ -111,5 +119,7 @@ export function modifyDisProInfo(
       userName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }

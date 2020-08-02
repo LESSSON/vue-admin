@@ -164,5 +164,7 @@ export function modifyDisFileInfo(
       userName
     },
     // baseURL: 'http://47.102.101.25:8088/'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }

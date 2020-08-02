@@ -17,7 +17,7 @@ export function login(dptOrUnitName, jobId, password, organizationType) {
       jobId,
       password
     },
-    // baseURL: 'http://47.102.101.25:8088/management'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 
@@ -28,13 +28,15 @@ export function getInfo(token) {
     method: 'get',
     params: {
       token
-    }
+    },
+    // baseURL: '/dev-api'
   })
 }
 
 export function logout() {
   return request({
     url: '/vue-admin-template/user/logout',
-    method: 'post'
+    method: 'post',
+    // baseURL: '/dev-api'
   })
 }

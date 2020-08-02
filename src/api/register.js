@@ -4,7 +4,7 @@ export function getPositions() {
   return request({
     url: '/company/get-positions',
     method: 'get',
-    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 高速公路公司
@@ -13,6 +13,7 @@ export function getDptNamesFromCompany() {
     url: '/company/get-dpt-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 施工方
@@ -21,6 +22,8 @@ export function getDptNamesFromConstructor() {
     url: '/constructor/get-unit-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 // 监理方
@@ -29,6 +32,8 @@ export function getDptNamesFromSupervisor() {
     url: '/supervisor/get-unit-names',
     method: 'get',
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 
@@ -41,6 +46,8 @@ export function checkCompanyJobId(jobId, dptName) {
       dptName
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 export function checkConstructorJobId(jobId, unitName) {
@@ -52,6 +59,8 @@ export function checkConstructorJobId(jobId, unitName) {
       unitName
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 export function checkSupervisorJobId(jobId, unitName) {
@@ -63,6 +72,8 @@ export function checkSupervisorJobId(jobId, unitName) {
       unitName
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 
@@ -109,6 +120,8 @@ export function doCompanyRegister(
       status
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 export function doConstructorRegister(
@@ -141,6 +154,8 @@ export function doConstructorRegister(
       unitName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
 export function doSupervisorRegister(
@@ -173,5 +188,7 @@ export function doSupervisorRegister(
       unitName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
+
   })
 }
