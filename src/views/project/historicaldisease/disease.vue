@@ -74,7 +74,7 @@
             <el-button type="primary">查询</el-button>
             </div>
                 <el-table :data="fileList" stripe style="width: 100%;" >
-                    <el-table-column prop="1" label="病害信息编号"></el-table-column>
+                    <el-table-column prop="disRegId" label="病害信息编号"></el-table-column>
                     <el-table-column prop="2" label="文件描述"></el-table-column>
                     <el-table-column prop="3" label="文件标题"></el-table-column>
                     <el-table-column prop="4" label="上传日期"></el-table-column>
@@ -87,6 +87,30 @@
                 </el-table>
                 </el-dialog>
                 </div>
+            </div>
+              <div class="table-content3">
+                <el-dialog title="历史病害信息添加" :visible.sync="uploadfileVisible">
+                <!-- <el-button type='text' >新增文件</el-button> -->
+                <div>
+            文件标题<el-input v-model="diseaseName"></el-input>
+            <el-button type="primary">查询</el-button>
+            </div>
+                <el-table :data="fileList" stripe style="width: 100%;" >
+                    <el-table-column prop="disRegId" label="病害信息编号"></el-table-column>
+                    <el-table-column prop="2" label="文件描述"></el-table-column>
+                    <el-table-column prop="3" label="文件标题"></el-table-column>
+                    <el-table-column prop="4" label="上传日期"></el-table-column>
+                    <el-table-column prop="5" label="操作人员"></el-table-column>
+                    <el-table-column prop="6" label="编辑"></el-table-column>
+                    <el-table-column prop="7" label="删除"></el-table-column>
+                    <el-table-column label="查看文件">
+                        <el-button type='text'>查看文件</el-button>
+                    </el-table-column>
+                </el-table>
+                </el-dialog>
+                </div>
+            <div>
+
             </div>
 
 
@@ -117,11 +141,8 @@
                     <el-table-column prop="userName" label="用户名"></el-table-column>
                     <el-table-column label="操作">
                       <template slot-scope="scope" >
-                  <!-- <el-button @click.native.prevent="addIgnoreNode(scope.row)" type="text" :disabled="scope.row.ignored === '已忽略'">{{scope.row.ignored}}</el-button>
-                  <el-button @click.native.prevent="delIgnoreNode(scope.row)" type="text" v-if="scope.row.ignored === '已忽略'">取消忽略</el-button> -->
                         <el-button type='text'>编辑项目</el-button>
-                        <!-- <el-button type='text' @click="fileVisible = true" >上传文件</el-button> -->
-                        <el-button type='text' @click="upFile(scope.row)" >上传文件</el-button>
+                        <el-button type='text' @click="editFile(scope.row)" >上传文件</el-button>
                         <el-button type='text'>删除</el-button>
                       </template>
                     </el-table-column>
@@ -170,16 +191,17 @@ export default {
         }
       ],
       fileList: [
-        {
-          "": 1,
-          "2": 1,
-          "3": 1,
-          "4": 1,
-          "5": 1,
-          "6": 1,
-          "7": 1
-        }
+        // {
+        //   "disRegId": 1,
+        //   "2": 1,
+        //   "3": 1,
+        //   "4": 1,
+        //   "5": 1,
+        //   "6": 1,
+        //   "7": 1
+        // }
       ],
+      upLoadFileList: [],
 
       dialogFormVisible: false,
       fileVisible: false,
@@ -364,8 +386,12 @@ export default {
         });
     },
 
-    upFile(row) {
+    editFile(row) {
       this.fileVisible = true;
+      this.fileList = [row];
+    },
+    uploadFile() {
+      this.upLoadFileList = this.fileList;
     },
 
     created() {
