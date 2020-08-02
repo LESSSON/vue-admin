@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import  VueResource  from 'vue-resource'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
+Vue.use(VueResource)
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
