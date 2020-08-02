@@ -101,28 +101,27 @@
                     <el-form-item label="文件描述" prop="roadType" >
                         <el-input v-model="fileForm.desc" ></el-input>
                     </el-form-item>
-                      <el-form-item label="选择文件:" prop="fileList">
-                        <el-upload
-                          ref="upload"
-                          :on-preview="handlePreview"
-                          :on-remove="handleRemove"
-                          :file-list="ruleForm.fileList"
-                          :auto-upload="false"
-                          :http-request="up"
-                          :limit="1"
-                          action=""
-                          class="upload-demo">
-                          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                          <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('ruleForm')">上传到服务器</el-button> -->
-                        </el-upload>
-                      </el-form-item>
                     <el-form-item label="上传日期" prop="roadType" >
                         <el-input v-model="fileForm.time" ></el-input>
                     </el-form-item>
                     <el-form-item label="上传人" prop="roadType" >
                         <el-input v-model="fileForm.worker" ></el-input>
                     </el-form-item>
-                    <el-button @click="submitUpload('fileForm')">提交</el-button>
+                    <el-form-item label="选择文件:" prop="fileList">
+                        <el-upload
+                          ref="upload"
+                          :on-preview="handlePreview"
+                          :on-remove="handleRemove"
+                          :file-list="fileForm.fileList"
+                          :auto-upload="false"
+                          :limit="1"
+                          action="http://47.102.101.25:8088/management/file/'{type}'/'{typeId}'/upload"
+                          class="upload-demo">
+                          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('fileForm')">上传</el-button>
+                    <!-- <el-button @click="submitUpload('fileForm')">提交</el-button> -->
+                        </el-upload>
+                      </el-form-item>
                   </el-form>
                 </el-dialog>
                 </div>
@@ -187,11 +186,15 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "disease",
   data() {
     return {
       diseaseName: "",
+      type: "",
+      typeId: "",
+      action: "",
       rawList: [],
       currentPage1: 1,
       pageSize: 10,
@@ -280,7 +283,7 @@ export default {
         disRegId: "",
         fileName: "",
         desc: "",
-        file: "",
+        fileList: [],
         time: "",
         worker: ""
       }
@@ -387,11 +390,7 @@ export default {
         .then(response => {
           // this.upLoading = false;
           if (response.status == "success") {
-            // alert("添加成功！");
-            // this.$router.push("/login");
             const disRegId = response.data["response"];
-            // this.dialogFormVisible = false;
-            // this.currentChangePage(this.rawList, 1);
           } else {
             alert("获取历史灾害信息失败");
           }
@@ -416,6 +415,24 @@ export default {
     editFile(row) {
       this.row = row;
       this.fileVisible = true;
+      this.type = this.roles[0];
+      console.log("type");
+      console.log(this.type);
+      this.typeId = this.row.disRegId;
+      // this.action =
+      //   "http://47.102.101.25:8088/management/file/" +
+      //   ${this.type} +
+      //   ${this.typeId} +
+      //   "/upload";
+      this.$store
+        .dispatch("GetFileList", {
+          type: this.roles[0],
+          typeId: this.row.disRegId
+        })
+        .then(response => {
+          this.fileList = response;
+          console.log(this.fileList);
+        });
       this.fileList = [row];
     },
     uploadFile() {
@@ -424,16 +441,37 @@ export default {
       this.fileForm.disRegId = this.row.disRegId;
     },
     up(file) {
-      const formData = new FormData();
+      var formData = new FormData();
+
+      var type = this.roles[0];
+      // console.log("type");
+      // console.log(file.file);
+      formData.append("typeId", this.fileForm.disRegId);
+
+      // console.log(this.fileForm);
+      // console.log(this.fileForm.disRegId);
+      // console.log(formData);
+
+      formData.append("fileName", this.fileForm.fileName);
+      // console.log(formData);
+
+      formData.append("type", type);
+      // console.log(formData);
+
       formData.append("file", file.file);
-      formData.append("project", this.ruleForm.project);
-      formData.append("protocolType", this.ruleForm.protocolType);
-      formData.append("version", this.ruleForm.version);
-      this.doUploadFile(formData);
+      // console.log(formData);
+
+      // console.log("122");
+      // console.log(formData);
+      this.doUploadFile(type, formData);
     },
-    doUploadFile(formData) {
+    doUploadFile(type, formData) {
+      // console.log("formData");
+      // console.log(formData);
       this.$store
         .dispatch("UploadFile", {
+          type: type,
+          typeId: this.row.disRegId,
           data: formData
         })
         .then(response => {
@@ -464,6 +502,12 @@ export default {
     created() {
       this.handleSizeChange(10);
     }
+  },
+  computed: {
+    ...mapGetters({
+      name: "name",
+      roles: "roles"
+    })
   }
 };
 </script>

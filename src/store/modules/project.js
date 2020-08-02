@@ -98,7 +98,10 @@ const project = {
   mutations: {
     SET_CONTENT_TYPE: (state, flag) => {
       state.post_flag = flag
-    }
+    },
+    SET_FILE_FLAG: (state, flag) => {
+      state.file_flag = flag
+    },
   },
 
   actions: {
@@ -535,10 +538,20 @@ const project = {
     UploadFile({
       commit
     }, info) {
+      console.log("info")
+      console.log(info)
       var type = info.type
       var typeId = info.typeId
+      var file = info.data
+      console.log("file")
+      console.log(file)
+      file.forEach((value, key) => {
+        console.log(`key ${key}: value ${value}`);
+      })
+      // console.log(file)
       return new Promise((resolve, reject) => {
-        uploadFile(type, typeId).then(response => {
+        // commit('SET_FILE_FLAG', 1)
+        uploadFile(type, typeId, file).then(response => {
           // console.log("store")
           // console.log(response)
           const data = response.data

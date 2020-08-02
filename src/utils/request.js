@@ -25,6 +25,10 @@ service.interceptors.request.use(
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
+      // if (store.getters.file_flag) {
+      // if (true) {
+      //   config.headers['Content-Type'] = 'multipart/form-data' // 文件上传
+      // }
       // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
     }
     return config

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getFileList(type, typeId) {
   return request({
-    url: '/company/' + type + "/" + typeId + '/fileList',
+    url: '/file/' + type + "/" + typeId + '/fileList',
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
@@ -11,21 +11,22 @@ export function getFileList(type, typeId) {
 }
 export function delFile(type, typeId, fileName) {
   return request({
-    url: '/company/' + type + "/" + typeId + '/' + fileName,
+    url: '/file/' + type + "/" + typeId + '/' + fileName,
     method: 'delete',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
     baseURL: 'http://47.102.101.25:8088/management'
   })
 }
-export function uploadFile(type, typeId) {
+export function uploadFile(type, typeId, file) {
   return request({
-    url: '/company/' + type + "/" + typeId + '/upload',
+    // url: '/company/' + type + "/" + typeId + '/upload',
+    url: '/file/' + type + '/' + typeId + '/upload',
     method: 'post',
+    processData: false,
+    contentType: false,
     data: {
-      file,
-      type,
-      typeId
+      file
     },
     // baseURL: 'http://47.102.101.25:8088'
     baseURL: 'http://47.102.101.25:8088/management'
