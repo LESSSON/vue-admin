@@ -10,6 +10,7 @@ export function getDisFileInfos(disRegId) {
       disRegId
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 获取病害名
@@ -18,7 +19,8 @@ export function getDisNames() {
     url: '/company/get-disNames',
     method: 'get',
     params: {},
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 获取路段类型名
@@ -28,6 +30,7 @@ export function getDisRoadTypes() {
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 获取病害治理类型名
@@ -37,18 +40,21 @@ export function getDisTreatTypes() {
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 获取灾害记录
 export function getHistoryDisInfos(limit, offset) {
   return request({
-    url: '/company/get-history-disInfos',
+    // url: '/company/get-history-disInfos',
+    url: '/company/history/get-disInfos',
     method: 'get',
     params: {
       limit,
       offset
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 获取灾害记录
@@ -60,6 +66,7 @@ export function getHistoryDisInfosByDisName(disName) {
       disName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 
@@ -73,7 +80,8 @@ export function delDisFileInfo(id) {
     params: {
       id
     },
-    baseURL: 'http://47.102.101.25:8088'
+    // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 
@@ -103,6 +111,7 @@ export function addDisFileInfo(
       userName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 // 新增历史病害信息
@@ -145,6 +154,7 @@ export function addHistoryDisInfo(
       userName,
     },
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 

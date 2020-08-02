@@ -6,6 +6,7 @@ export function getFileList(type, typeId) {
     method: 'get',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 export function delFile(type, typeId, fileName) {
@@ -14,6 +15,7 @@ export function delFile(type, typeId, fileName) {
     method: 'delete',
     params: {},
     // baseURL: 'http://47.102.101.25:8088'
+    baseURL: 'http://47.102.101.25:8088/management'
   })
 }
 export function uploadFile(type, typeId) {
