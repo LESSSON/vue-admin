@@ -116,9 +116,14 @@
                     <el-table-column prop="treatType" label="病害处理类型"></el-table-column>
                     <el-table-column prop="userName" label="用户名"></el-table-column>
                     <el-table-column label="操作">
+                      <template slot-scope="scope" >
+                  <!-- <el-button @click.native.prevent="addIgnoreNode(scope.row)" type="text" :disabled="scope.row.ignored === '已忽略'">{{scope.row.ignored}}</el-button>
+                  <el-button @click.native.prevent="delIgnoreNode(scope.row)" type="text" v-if="scope.row.ignored === '已忽略'">取消忽略</el-button> -->
                         <el-button type='text'>编辑项目</el-button>
-                        <el-button type='text' @click="fileVisible = true">上传文件</el-button>
+                        <!-- <el-button type='text' @click="fileVisible = true" >上传文件</el-button> -->
+                        <el-button type='text' @click="upFile(scope.row)" >上传文件</el-button>
                         <el-button type='text'>删除</el-button>
+                      </template>
                     </el-table-column>
                 </el-table>
                 <div class="block">
@@ -166,7 +171,7 @@ export default {
       ],
       fileList: [
         {
-          "1": 1,
+          "": 1,
           "2": 1,
           "3": 1,
           "4": 1,
@@ -357,6 +362,10 @@ export default {
             this.rawList = diseases;
           }
         });
+    },
+
+    upFile(row) {
+      this.fileVisible = true;
     },
 
     created() {
