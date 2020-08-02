@@ -42,6 +42,12 @@ export const constantRoutes = [{
     component: () => import('@/views/login/register'),
     // hidden: true
   },
+  {
+    path: '/approval',
+    // redirect: '/register',
+    component: () => import('@/views/project/approval'),
+    // hidden: true
+  },
 
   {
     path: '/404',
@@ -81,7 +87,7 @@ export const constantRoutes = [{
   {
     path: '/',
     component: Layout,
-    redirect: '/disease',
+    redirect: '/index',
     name: '历史病害管理',
     meta: {
       title: '历史病害管理',
@@ -127,7 +133,16 @@ export const constantRoutes = [{
         title: '监理信息维护',
         icon: 'dashboard'
       }
-    }, ]
+    }, {
+      path: 'index',
+      name: 'index',
+      hidden: true,
+      component: () => import('@/views/project/index'),
+      meta: {
+        title: 'index',
+        icon: 'dashboard'
+      }
+    }]
   },
 
 

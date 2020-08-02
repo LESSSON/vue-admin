@@ -192,3 +192,29 @@ export function doSupervisorRegister(
 
   })
 }
+
+export function verifyStaff(id, organizationType) {
+  return request({
+    url: '/' + organizationType + '/verify-staff',
+    method: 'get',
+    params: {
+      id
+    },
+    // baseURL: '/dev-api'
+    baseURL: 'http://47.102.101.25:8088/management'
+  })
+}
+
+export function getUnverifiedStaffs(dptName, limit, offset) {
+  return request({
+    url: "/company/get-unverified-staffs",
+    method: 'get',
+    params: {
+      dptName,
+      limit,
+      offset
+    },
+    // baseURL: '/dev-api'
+    baseURL: 'http://47.102.101.25:8088/management'
+  })
+}

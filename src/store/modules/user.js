@@ -120,7 +120,7 @@ const actions = {
         } = data
 
         // commit('SET_NAME', name)
-        // commit('SET_AVATAR', avatar)
+        commit('SET_AVATAR', avatar)
         // commit('SET_ROLES', roles)
         console("120")
         console(roles)
