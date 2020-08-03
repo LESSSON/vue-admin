@@ -2,12 +2,12 @@
     <el-container>
         <el-header>
 <!--            历史病害维护   -->
-          <el-button type="primary" plain @click="dialogFormVisible = true">添加病害信息</el-button>
+          <el-button type="primary" plain @click="addDialogVisible = true">添加病害信息</el-button>
         </el-header>
         <el-main>
 
             <div>
-                <el-dialog title="历史病害信息添加" :visible.sync="dialogFormVisible">
+                <el-dialog title="历史病害信息添加" :visible.sync="addDialogVisible">
                         <el-form :inline="false" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
                         <el-form-item label="方向" prop="direct" >
                             <el-input v-model="ruleForm.direct" ></el-input>
@@ -57,7 +57,7 @@
                         </el-form-item> -->
                         <el-form-item>
                             <el-button type="primary" @click="addHistoryDisInfo('ruleForm')">提交</el-button>
-                            <el-button type="primary" @click="dialogFormVisible = false">取消</el-button>
+                            <el-button type="primary" @click="addDialogVisible = false">取消</el-button>
                         </el-form-item>
                     </el-form>
                 </el-dialog>
@@ -65,42 +65,31 @@
 
             <div>
               <div class="table-content2">
-                <el-dialog title="历史病害信息文件" :visible.sync="fileVisible">
+                <el-dialog title="历史病害信息文件" :visible.sync="fileOperateDialogVisible">
 
                 <el-button type='text' @click="uploadFile">新增文件</el-button>
-<!--                <div>-->
-<!--            文件标题<el-input v-model="diseaseName"></el-input>-->
-<!--            <el-button type="primary">查询</el-button>-->
-<!--            </div>-->
+
                 <el-table :data="fileList" stripe style="width: 100%;" >
-<!--                    <el-table-column prop="disRegId" label="病害信息编号"></el-table-column>-->
                     <el-table-column prop="fileName" label="文件名"></el-table-column>
                     <el-table-column prop="recentModifyTime" label="修改时间"></el-table-column>
-                    <!-- <el-table-column prop="3" label="文件标题"></el-table-column> -->
-                    <!-- <el-table-column prop="4" label="上传日期"></el-table-column> -->
-                    <!-- <el-table-column prop="5" label="操作人员"></el-table-column> -->
-                    <!-- <el-table-column prop="6" label="编辑"></el-table-column> -->
-                    <!-- <el-table-column prop="7" label="删除"></el-table-column> -->
+
                     <el-table-column label="操作">
                       <template slot-scope="scope">
-                        <el-button type='text'>查看文件</el-button>
+                        <el-button type='text' @click="previewFile(scope.row.fileName)">预览</el-button>
                         <el-button type="danger" icon="el-icon-delete" size="small" circle @click="deleteFile(scope.row.fileName)"></el-button>
                       </template>
-<!--                        <el-button type='text'>查看文件</el-button>-->
-<!--                       <el-button type="danger" icon="el-icon-delete" size="small" circle @click="deleteFile(fileName)"></el-button>-->
                     </el-table-column>
                 </el-table>
                 </el-dialog>
                 </div>
             </div>
               <div class="table-content3">
-                <el-dialog title="上传文件" :visible.sync="uploadfileVisible">
+                <el-dialog title="上传文件" :visible.sync="fileUploadDialogVisible">
 
                   <el-upload
                     ref="upload"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
-                    :file-list="fileForm.fileList"
                     :auto-upload="false"
                     :limit="3"
                     :on-success="doUploadSuccess"
@@ -108,46 +97,20 @@
                     class="upload-demo">
                     <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
-                    <!-- <el-button @click="submitUpload('fileForm')">提交</el-button> -->
                     <div slot="tip" class="el-upload__tip">每次最多可以上传3个文件</div>
                   </el-upload>
 
-
-                <!-- <el-button type='text' >新增文件</el-button> -->
-<!--                  <el-form :inline="false" :model="fileForm" ref="fileForm" label-width="100px" class="demo-ruleForm">-->
-<!--                    <el-form-item label="病害编号" prop="roadType" >-->
-<!--                        <el-input v-model="fileForm.disRegId" ></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="文件标题" prop="roadType" >-->
-<!--                        <el-input v-model="fileForm.fileName" ></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="文件描述" prop="roadType" >-->
-<!--                        <el-input v-model="fileForm.desc" ></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="上传日期" prop="roadType" >-->
-<!--                        <el-input v-model="fileForm.time" ></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="上传人" prop="roadType" >-->
-<!--                        <el-input v-model="fileForm.worker" ></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="选择文件:" prop="fileList">-->
-<!--                        <el-upload-->
-<!--                          ref="upload"-->
-<!--                          :on-preview="handlePreview"-->
-<!--                          :on-remove="handleRemove"-->
-<!--                          :file-list="fileForm.fileList"-->
-<!--                          :auto-upload="false"-->
-<!--                          :limit="1"-->
-<!--                          action="`http://47.102.101.25:8088/management/file/${type}/${typeId}/upload`"-->
-<!--                          class="upload-demo">-->
-<!--                          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
-<!--                          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('fileForm')">上传</el-button>-->
-<!--                    &lt;!&ndash; <el-button @click="submitUpload('fileForm')">提交</el-button> &ndash;&gt;-->
-<!--                        </el-upload>-->
-<!--                      </el-form-item>-->
-<!--                  </el-form>-->
                 </el-dialog>
                 </div>
+
+<!--              <el-dialog title="文件预览" :visible.sync="filePreviewDialogVisible">-->
+<!--              </el-dialog>-->
+              <el-drawer
+                :v-loading="fileResourceLoading"
+                :visible.sync="filePreviewDrawerVisible"
+                >
+                <PDF ref="pdf"/>
+               </el-drawer>
             <div>
 
             </div>
@@ -157,12 +120,10 @@
             <el-button type="primary" @click="getHistoryDisInfosByDisName()">查询</el-button>
             </div>
 
-
               <div>
                 <!-- 表格数据 -->
                 <div class="table-content">
-                <el-table :data="rawList" stripe style="width: 100%;"
-                >
+                <el-table :data="rawList" stripe style="width: 100%;">
                     <el-table-column prop="direct" label="方向"></el-table-column>
                     <el-table-column prop="disName" label="病害名称"></el-table-column>
                     <el-table-column prop="disRegId" label="登记编号"></el-table-column>
@@ -174,15 +135,12 @@
                     <el-table-column prop="roadType" label="路段类型"></el-table-column>
                     <el-table-column prop="branchName" label="管辖分公司"></el-table-column>
                     <el-table-column prop="manageName" label="上报管理所"></el-table-column>
-<!--                    <el-table-column prop="status" label="当前状态"></el-table-column>-->
                     <el-table-column prop="treatType" label="处理类型"></el-table-column>
-<!--                    <el-table-column prop="userName" label="用户名"></el-table-column>-->
                     <el-table-column label="操作">
                       <template slot-scope="scope" >
-                        <el-button type='text' style="margin-left: 8px">编辑</el-button>
+                        <el-button type='text' style="margin-left: 8px" @click="editDisInfo(scope.row)">编辑</el-button>
                         <el-button type='text' @click="fileOperate(scope.row)" style="color: green">文件</el-button>
-<!--                        <el-button type='text' @click="editFile(scope.row)">上传文件</el-button>-->
-                        <el-button type='text' style="color: red">删除</el-button>
+                        <el-button type='text' style="color: red" @click="deleteDisInfo(scope.row)">删除</el-button>
                       </template>
                     </el-table-column>
                 </el-table>
@@ -209,10 +167,11 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import moment from 'moment';
-import {getDisNames, getDisRoadTypes, getDisTreatTypes} from "../../../api/historyDis";
-import {getFileList} from "../../../api/file";
+import PDF from './pdfPreview';
+
 export default {
   name: "disease",
+  comments: {PDF},
   data() {
     return {
       diseaseName: "",
@@ -237,9 +196,11 @@ export default {
       fileList: [],
       upLoadFileList: [],
       row: "",
-      dialogFormVisible: false,
-      fileVisible: false,
-      uploadfileVisible: false,
+      addDialogVisible: false,
+      editDialogVisible: false,
+      fileOperateDialogVisible: false,
+      fileUploadDialogVisible: false,
+      filePreviewDrawerVisible: false,
       ruleForm: {
         direct: "",
         disName: "",
@@ -292,21 +253,14 @@ export default {
           { required: true, message: "请输入病害处理类型", trigger: "blur" }
         ]
       },
-      fileForm: {
-        id: "",
-        disRegId: "",
-        fileName: "",
-        desc: "",
-        fileList: [],
-        time: "",
-        worker: ""
-      },
       disNameList: [],
       roadTypeList: [],
       treatTypeList: [],
       dptNameList:[],
       uploadUrl: "",
-
+      src: '',
+      fileUrl: "http://47.102.101.25:8088/management/file/download/base/2/Spring%2BSecurity%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C.pdf",
+      fileResourceLoading: true,
     };
   },
 
@@ -334,15 +288,27 @@ export default {
 
   methods: {
 
+    previewFile(fileName) {
+      this.filePreviewDrawerVisible = true;
+      this.fileUrl = "http://47.102.101.25:8088/management/file/download/" + this.type + "/" + this.typeId + "/" + fileName;
+      this.$ref.pdf.previewPDF(this.fileUrl);
+      //this.src = pdf.createLoadingTask("http://47.102.101.25:8088/management/file/download/" + this.type + "/" + this.typeId + "/" + fileName);
+    },
+
+    editDisInfo(row) {
+
+    },
+
+    deleteDisInfo(row) {
+
+    },
+
     doUploadSuccess() {
-      this.uploadfileVisible = false;
-      this.$store
-        .dispatch("GetFileList", {
-          type: this.type,
-          typeId: this.typeId
-        })
+      this.fileUploadDialogVisible = false;
+
+      this.$http.get("http://47.102.101.25:8088/management/file/"+this.type+"/"+this.typeId+"/fileList")
         .then(response => {
-          this.fileList = response;
+          this.fileList = response.body.data;
         });
     },
 
@@ -429,7 +395,7 @@ export default {
               if (response == "success") {
                 alert("添加成功！");
                 // this.$router.push("/login");
-                this.dialogFormVisible = false;
+                this.addDialogVisible = false;
                 this.currentChangePage(this.rawList, 1);
               } else {
                 alert("添加失败，请重试");
@@ -479,63 +445,26 @@ export default {
       return this.uploadUrl;
     },
 
-    getDisFileInfos(row) {
-      const disName = row.disName;
-
-      this.$store
-        .dispatch("GetHistoryDisInfosByDisName", {
-          // staffId: staffId,
-          disName: disName
-        })
-        .then(response => {
-          // this.upLoading = false;
-          if (response.status == "success") {
-            const disRegId = response.data["response"];
-          } else {
-            alert("获取历史灾害信息失败");
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-
     getHistoryDisInfosByDisName() {
-      const diseaseName = this.diseaseName;
-      this.$store
-        .dispatch("GetHistoryDisInfosByDisName", { diseaseName })
-        .then(response => {
-          if (response.status == "success") {
-            const diseases = response.data;
-            this.rawList = diseases;
+
+      this.$http.get("http://47.102.101.25:8088/management/company/history/get-disInfos-by-disName?disName=" + this.diseaseName)
+        .then((response) => {
+          if ("success" === response.data.status) {
+            this.rawList = response.data.data;
           }
-        });
+        })
     },
 
     dateFormat :function(row,column){
-
-      var date = row[column.property];
-
+      const date = row[column.property];
       if(date == undefined){return ''};
-
       return moment(date).format("YYYY-MM-DD HH:mm:ss")
-
     },
 
     fileOperate(row) {
       this.row = row;
-      // console.log("row"+row.id)
-      this.fileVisible = true;
-      // this.type = this.roles[0];
-
-      // console.log("type");
-      // console.log(this.type);
+      this.fileOperateDialogVisible = true;
       this.typeId = this.row.id;
-      // this.action =
-      //   "http://47.102.101.25:8088/management/file/" +
-      //   ${this.type} +
-      //   ${this.typeId} +
-      //   "/upload";
       this.$store
         .dispatch("GetFileList", {
           type: this.type,
@@ -543,75 +472,22 @@ export default {
         })
         .then(response => {
           this.fileList = response;
-          console.log(this.fileList);
         });
       this.fileList = [row];
       this.uploadUrl = "http://47.102.101.25:8088/management/file/"+ this.type + "/" + this.typeId + "/upload";
     },
     uploadFile() {
-      this.uploadfileVisible = true;
-      // this.upLoadFileList = this.fileList;
-      this.fileForm.disRegId = this.row.disRegId;
-      this.fileForm.id = this.row.id;
+      this.fileUploadDialogVisible = true;
     },
-    up(file) {
-      var formData = new FormData();
 
-      var type = this.roles[0];
-      // console.log("type");
-      // console.log(file.file);
-      formData.append("typeId", this.fileForm.disRegId);
-
-      // console.log(this.fileForm);
-      // console.log(this.fileForm.disRegId);
-      // console.log(formData);
-
-      formData.append("fileName", this.fileForm.fileName);
-      // console.log(formData);
-
-      formData.append("type", type);
-      // console.log(formData);
-
-      formData.append("file", file.file);
-      // console.log(formData);
-
-      // console.log("122");
-      // console.log(formData);
-      this.doUploadFile(type, formData);
-    },
-    doUploadFile(type, formData) {
-      // console.log("formData");
-      // console.log(formData);
-      this.$store
-        .dispatch("UploadFile", {
-          type: type,
-          typeId: this.row.disRegId,
-          data: formData
-        })
-        .then(response => {
-          alert("上传文件成功！");
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    // submitUpload(formName) {
-    //   this.$refs[formName].validate(valid => {
-    //     if (valid) {
-    //       this.$refs.upload.submit();
-    //     } else {
-    //       console.log(this.ruleForm.fileList);
-    //       console.log("必填项不全");
-    //       return false;
-    //     }
-    //   });
-    // },
     submitUpload() {
       this.$refs.upload.submit();
     },
+
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
+
     handlePreview(file) {
       console.log(file);
     },
